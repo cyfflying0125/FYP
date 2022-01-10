@@ -40,29 +40,10 @@
       </select>
       This is the status bar.
       <div id = "infobar" style="display: none;">
-        <table>
-          <thead><tr><th>Infomation</th></tr></thead>
-          <tbody>
-          <tr><th>Item</th>
-              <td>Rounded Banquet Table</td></tr>
-          <tr><th>Dimension</th>
-              <td>White 60"x60"</td></tr>
-          <tr><th>Quantity</th>
-                  <td>8</td></tr>
-          <tr><th>Vendor</th>
-              <td>Hillcrest Hotel</td></tr>
-          <tr><th>Contact</th>
-              <td>Mr Brandon Sim <br>+65 6242 1777</td></tr>
-          <tr><th>Last Update</th>
-              <td>5 Jan 2022, 5pm</td></tr>
-          <tr><th colspan="2">Alternatives</th></tr>
-          </tbody>
-          <tfoot>
-            <tr><td colspan="2">
-              <button type="button" name="button">Option 1</button>
-              <button type="button" name="button">Option 2</button></td></tr>
-          </tfoot>
-        </table>
+				<form action="">
+					<input type="hidden" id="identifier" name="identifier" value=""></input>
+				</form>
+
 
       </div>
 
@@ -139,11 +120,24 @@
 					if (found[0].object.userData.draggable) {
 						draggable = found[0].object;
 						console.log(`found draggable ${draggable.userData.name}`);
+					//	document.getElementById("identifier").value = draggable.userData.name;
 						document.getElementById("infobar").style.display = "";
+						findAssetInfo(draggable.userData.name);
 						//found[0].object.material.color.set(0xff0000);
 					}
 				}
 			});
+
+			function findAssetInfo(str) {
+				console.log("FAI called");
+				const xhttp = new XMLHttpRequest();
+				xhttp.onload = function() {
+					document.getElementById("infobar").innerHTML = this.responseText;
+				}
+				xhttp.open("GET", "infobar.php?name="+str);
+				xhttp.send();
+				}
+
 
 			window.addEventListener('mousemove', event => {
 			moveMouse.x = (event.clientX / window.innerWidth) * 2 - 1;
@@ -187,7 +181,9 @@
 					asset.receiveShadow = true;
 
 					asset.userData.draggable = true;
-					asset.userData.name = 'asset';
+					asset.userData.name = '' + modelPath;
+
+					//console.log(`created asset ${asset.userData.name}`);
 
 					scene.add(asset);
 				})
@@ -242,5 +238,5 @@
     </div>
 
 
-	</body>
+</body>
 </html>
