@@ -1,6 +1,32 @@
 <?php
   include 'connect.php';
-  echo $_GET['name'];
+  //echo $_GET['name'];
+  $filePath = $_GET['name'];
+  $query = "SELECT * FROM assets WHERE filePath = '$filePath'";
+  $result = $db->query($query);
+  $num_results = $result->num_rows;
+  if ($num_results > 0) {
+    $row = $result->fetch_assoc();
+    $assetID = $row['assetID'];
+    $assetType = $row['assetType'];
+    $filePath = $row['filePath'];
+    $description = $row['description'];
+    $dimension = $row['dimension'];
+    $vendor = $row['vendor'];
+    $contactPerson = $row['contactPerson'];
+    $contactNo = $row['contactNo'];
+    $remarks = $row['remarks'];
+  }
+
+  $queryQty = "SELECT COUNT(assetID) FROM scene WHERE assetID = '$assetID'";
+  $resultQty = $db->query($queryQty);
+  $rowQty = $resultQty->fetch_assoc();
+  $qty = $rowQty['COUNT(assetID)'];
+
+  $queryALT = "SELECT * FROM assets WHERE assetType = '$assetType'";
+  $resultALT = $db->query($queryALT);
+  $num_result_ALT = $resultALT->num_rows;
+
 ?>
 <style>
 #infobar table{
@@ -37,26 +63,36 @@
 </style>
 <div id="infobar">
   <table>
-  <thead><tr><th>Infomation</th></tr></thead>
+  <thead><tr><th>Infomation<br></th></tr></thead>
   <tbody>
   <tr><th>Item</th>
-      <td>Rounded Banquet Table</td></tr>
+      <td><?php echo $description;?></td></tr>
   <tr><th>Dimension</th>
-      <td>White 60"x60"</td></tr>
+      <td><?php echo $dimension;?></td></tr>
   <tr><th>Quantity</th>
-          <td>8</td></tr>
+          <td><?php echo $qty;?></td></tr>
   <tr><th>Vendor</th>
-      <td>Hillcrest Hotel</td></tr>
+      <td><?php echo $vendor;?></td></tr>
   <tr><th>Contact</th>
-      <td>Mr Brandon Sim <br>+65 6242 1777</td></tr>
-  <tr><th>Last Update</th>
-      <td>5 Jan 2022, 5pm</td></tr>
-  <tr><th colspan="2">Alternatives</th></tr>
+      <td><?php echo $contactPerson, "<br>", $contactNo; ?></td></tr>
+  <tr><th>Remarks</th>
+      <td><?php if ($remarks == NULL) { echo "-"; } else echo $remarks; ?></td></tr>
+  <?php
+    if ($num_result_ALT > 1) {
+      echo "<tr><th colspan='2'>Alternatives<br>";
+      echo "<select name='alternatives' id='alternatives'>";
+      for ($i=0; $i<$num_result_ALT; $i++) {
+        $rowALT = $resultALT->fetch_assoc();
+        $id = $rowALT['assetID'];
+        $des = $rowALT['description'];
+        if($id == $assetID) {
+          echo "<option value= '$id' selected>$des</option>";
+        } else echo "<option value= '$id'>$des</option>";
+      }
+      echo "</select>";
+    }
+  ?>
+  </th></tr>
   </tbody>
-  <tfoot>
-    <tr><td colspan="2">
-      <button type="button" name="button">Option 1</button>
-      <button type="button" name="button">Option 2</button></td></tr>
-  </tfoot>
   </table>
 </div>
