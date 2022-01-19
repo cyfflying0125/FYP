@@ -54,21 +54,21 @@ body {
   font-weight: normal;
 }
 
-ul {
+.leftnav ul {
   list-style-type: none;
 }
 
-li {
+.leftnav li {
   margin-bottom: 20px;
   margin-left: 8px;
 }
 
-li a {
+.leftnav li a {
   text-decoration: none;
   color: #AD797A;
   font-size: 20px;
 }
-li a:hover {
+.leftnav li a:hover {
   text-decoration: none;
   font-weight: bold;
   color: #8B5A5B;
@@ -95,8 +95,8 @@ button {
   left: 290px;
   width: auto;
   z-index: 100;
-  background: rgba(255, 255, 255, 0.7);
-  border-radius: 4px;
+  background-color: rgba(255, 255, 255, 0.6);
+  border-radius: 16px;
 }
 #sidemenu button {
   margin: 8px;
@@ -104,9 +104,56 @@ button {
   height: 48px;
   border-radius: 24px;
   padding: 2px;
-  background-color: #EBE1E1;
+  background-color: #ffedec;
   font-family: optima;
 }
 #sidemenu button:disabled {
   opacity: 40%;
+}
+
+#dropdownAdd {
+  position: absolute;
+  display: none;
+  top: 80px;
+  left: 366px;
+  background-color: rgba(255, 237, 236, 0.8);
+  width: 180px;
+  padding: 20px 0;
+
+  border-radius: 16px;
+  border: 1px solid #AD797A;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  overflow: hidden;
+}
+
+#dropdownAdd a, .dropdown-btn {
+  margin-left: 16px;
+  margin-bottom: 4px;
+  text-decoration: none;
+  font-size: 16px;
+  color: #AD797A;
+  display: block;
+  border: none;
+  background: none;
+  width:100%;
+  text-align: left;
+  outline: none;
+  font-family: optima;
+}
+
+/* On mouse-over */
+#dropdownAdd a:hover, .dropdown-btn:hover {
+  font-weight: bold;
+}
+
+/* Dropdown container (hidden by default). Optional: add a lighter background color and some left padding to change the design of the dropdown content */
+.dropdown-container {
+  display: none;
+  background-color: rgba(255, 255, 255, 0.8);
+  padding: 12px 8px;
+
+}
+.dropdown-container a {
+  font-size: 16px;
+
 }
