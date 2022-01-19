@@ -9,9 +9,10 @@
 		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
     <link rel="stylesheet" href="css/mastercss.css">
   	<title>Wedding Planner</title>
-
+		<script type="text/javascript" src="js/buttonManager.js"></script>
 	</head>
 	<body>
+
     <div id="wrapper">
     <div class="leftpanel">
       <table class="userProfileTable">
@@ -44,10 +45,41 @@
       <div id = "infobar" style="display: none;">  </div>
 			<div id = "sidemenu">
 				<table>
-						<tr><td><button id="add">Add</button></td></tr>
+						<tr><td><button id="add" onclick="openDropdown();">Add</button></td></tr>
 						<tr><td><button id="delete" disabled>Delete</button>
 										<input type="hidden" id="currentObj" value=""></td></tr>
 				</table>
+			</div>
+			<?php
+				$query = "SELECT assetType, filePath, description, rotation, scale FROM assets";
+				$result = $db->query($query);
+				$num_results = $result->num_rows;
+
+			?>
+			<div id="dropdownAdd">
+				<input type="hidden" id="path" value="">
+				<input type="hidden" id="rotation" value="">
+				<input type="hidden" id="scale" value="">
+			  <button class="dropdown-btn" onclick="dropdown('table');">Tables <span style="font-size: 10px;">&#9660;</span></button>
+			  <div class="dropdown-container" id="tableDropdown">
+					<?php
+						for($i=0; $i<$num_results; $i++) {
+							$row = $result->fetch_assoc();
+							if($row['assetType'] == 'table') {
+								?>
+								<a href="#" class ='selectObj' onclick="addObj('<?php echo $row['filePath']; ?>',
+									<?php echo $row['rotation'],',',$row['scale'];?>);">	<?php echo $row['description']; ?></a>
+								<?php
+							}
+						}
+					?>
+
+			  </div>
+				<button class="dropdown-btn" onclick="dropdown('chair');">Chairs <span style="font-size: 10px;">&#9660;</span></button>
+			  <div class="dropdown-container" id="chairDropdown">
+			    <a href="#">Chair 1</a>
+			    <a href="#">Chair 2</a>
+			  </div>
 			</div>
 
 			<script type="module">
@@ -73,6 +105,8 @@
 			//Controls
 			const controls = new OrbitControls( camera, renderer.domElement);
 			controls.maxPolarAngle = Math.PI/2;
+			controls.minDistance = 60;
+			controls.maxDistance = 800;
 			camera.position.set(5, 12, 24);
 			controls.update();
 
@@ -153,10 +187,29 @@
 
 			document.getElementById( 'delete' ).addEventListener( 'click', function () {
 				var obj = document.getElementById("currentObj").value + '';
-				removeObject(obj);
-				console.log('delete is clicked on ' + obj);
-
+				if(confirm("Are you sure you want to delete this item?")){
+					removeObject(obj);
+					console.log('delete is clicked on ' + obj);
+				}
 			} );
+
+			var container = document.getElementById('dropdownAdd');
+			var selections = container.getElementsByClassName('selectObj');
+			for (var i = 0; i < selections.length; i++) {
+				selections[i].addEventListener( 'click', function () {
+					var path = document.getElementById("path").value + '';
+					var r = document.getElementById("rotation").value;
+					var s = document.getElementById("scale").value;
+
+					console.log('path=',path);
+					console.log('rotation=',r);
+					console.log('scale=',s);
+					createAsset(null,path,20,0,20,r,s);
+				} );
+			}
+
+
+
 			var oldColor = 0;
 			var HOVERED = null;
 
@@ -172,7 +225,7 @@
 							HOVERED = found[0].object;
 							oldColor = found[0].object.material.color.getHex();
 							found[0].object.material.color.set(0xDBF3FA);
-							console.log('hovered');
+					//		console.log('hovered');
 						}
 
 						for (let i = 0; i < found.length; i++) {
