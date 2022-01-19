@@ -63,7 +63,7 @@
 </style>
 <div id="infobar">
   <table>
-  <thead><tr><th>Infomation<br></th></tr></thead>
+  <thead><tr><th colspan="2">Information</th></tr></thead>
   <tbody>
   <tr><th>Item</th>
       <td><?php echo $description;?></td></tr>
@@ -79,8 +79,12 @@
       <td><?php if ($remarks == NULL) { echo "-"; } else echo $remarks; ?></td></tr>
   <?php
     if ($num_result_ALT > 1) {
+
+
       echo "<tr><th colspan='2'>Alternatives<br>";
-      echo "<select name='alternatives' id='alternatives'>";
+      echo "<form action='' method='post'>";
+      echo "<input type='hidden' name='action' value='change'/>";
+      echo "<select name='alternatives' id='alternatives' onchange='this.form.submit();'>";
       for ($i=0; $i<$num_result_ALT; $i++) {
         $rowALT = $resultALT->fetch_assoc();
         $id = $rowALT['assetID'];
@@ -89,10 +93,10 @@
           echo "<option value= '$id' selected>$des</option>";
         } else echo "<option value= '$id'>$des</option>";
       }
-      echo "</select>";
+      echo "</select></form></th></tr>";
     }
   ?>
-  </th></tr>
+
   </tbody>
   </table>
 </div>
