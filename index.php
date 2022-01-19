@@ -45,7 +45,8 @@
 			<div id = "sidemenu">
 				<table>
 						<tr><td><button id="add">Add</button></td></tr>
-						<tr><td><button id="delete" disabled>Delete</button></td></tr>
+						<tr><td><button id="delete" disabled>Delete</button>
+										<input type="hidden" id="currentObj" value=""></td></tr>
 				</table>
 			</div>
 
@@ -105,18 +106,21 @@
 				raycaster.setFromCamera(pos, camera);
 				return raycaster.intersectObjects(scene.children);
 			}
+
 			window.addEventListener('click', event => {
 				if (draggable != null && typeof draggable.userData.name !== 'undefined') {
 					console.log(`dropping draggable ${draggable.userData.name}`);
 					draggable = null;
 
 					return;
-				}
+			}
 
 				// THREE RAYCASTER
 				clickMouse.x = (event.clientX / window.innerWidth) * 2 - 1;
 				clickMouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
 
+
+			 //On Select
 				const found = intersect(clickMouse);
 				if (found.length > 0) {
 					if (found[0].object.userData.draggable) {
@@ -124,14 +128,15 @@
 						console.log(`found draggable ${draggable.userData.name}`);
 						document.getElementById("infobar").style.display = "";
 						document.getElementById("delete").disabled = false;
+						document.getElementById("currentObj").value = draggable.name;
+						//draggable.material.color.set(0xDBF3FA);
 						findAssetInfo(draggable.userData.name);
-						//found[0].object.material.color.set(0xff0000);
+
 					}
 				}
 			});
 
 			function findAssetInfo(str) {
-				console.log("FAI called");
 				const xhttp = new XMLHttpRequest();
 				xhttp.onload = function() {
 					document.getElementById("infobar").innerHTML = this.responseText;
@@ -147,9 +152,39 @@
 			});
 
 			document.getElementById( 'delete' ).addEventListener( 'click', function () {
-				removeObject('a');
-				console.log('delete is clicked');
+				var obj = document.getElementById("currentObj").value + '';
+				removeObject(obj);
+				console.log('delete is clicked on ' + obj);
+
 			} );
+			var oldColor = 0;
+			var HOVERED = null;
+
+			function dragObject() {
+				if (draggable != null) {
+					const found = intersect(moveMouse);
+					if (found.length > 0) {
+						if (HOVERED != found[0].object && !found[0].object.userData.ground) {
+							if (HOVERED != null) {
+								HOVERED.material.color.setHex(oldColor);
+								HOVERED = null;
+							}
+							HOVERED = found[0].object;
+							oldColor = found[0].object.material.color.getHex();
+							found[0].object.material.color.set(0xDBF3FA);
+							console.log('hovered');
+						}
+
+						for (let i = 0; i < found.length; i++) {
+							if (!found[i].object.userData.ground) continue;
+
+							let target = found[i].point;
+							draggable.position.x = target.x;
+							draggable.position.z = target.z;
+						}
+					}
+				}
+			}
 			//plane
 			function createFloor() {
 				let pos = { x: 0, y: -1, z: 0 };
@@ -168,7 +203,7 @@
 
 			}
 
-			function createAsset(id,modelPath,x,y,z) {
+			function createAsset(id,modelPath,x,y,z,r,s) {
 				const objLoader = new OBJLoader();
 
 				objLoader.loadAsync('./assets/' + modelPath).then((group) => {
@@ -178,11 +213,11 @@
 					asset.position.y = y;
 					asset.position.z = z;
 
-					asset.scale.x = 1;
-					asset.scale.y = 1;
-					asset.scale.z = 1;
+					asset.scale.x = s;
+					asset.scale.y = s;
+					asset.scale.z = s;
 
-					asset.rotation.x = -Math.PI/2;
+					asset.rotation.x = Math.PI * r;
 
 					asset.castShadow = true;
 					asset.receiveShadow = true;
@@ -200,25 +235,6 @@
 				var obj = scene.getObjectByName(name);
 				scene.remove(obj);
 			}
-
-
-
-			function dragObject() {
-				if (draggable != null) {
-					const found = intersect(moveMouse);
-					if (found.length > 0) {
-						for (let i = 0; i < found.length; i++) {
-							if (!found[i].object.userData.ground)
-								continue;
-
-							let target = found[i].point;
-							draggable.position.x = target.x;
-							draggable.position.z = target.z;
-						}
-					}
-				}
-			}
-
 			<?php
 				$query = "SELECT * FROM scene";
 				$result = $db->query($query);
@@ -230,12 +246,15 @@
 					$px = $row['Px'];
 					$py = $row['Py'];
 					$pz = $row['Pz'];
+					$rotation = $row['rotation'];
+					$scale = $row['scale'];
+
 			?>
 				//console.log('<?php echo $filePath;?>');
 
 				createAsset('<?php echo $sceneid;?>',
 											'<?php echo $filePath;?>',
-											<?php echo $px, "," , $py , "," , $pz;?>);
+											<?php echo $px, "," , $py , "," , $pz, "," , $rotation, "," ,$scale;?>);
 			<?php
 				}
 
