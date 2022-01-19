@@ -1,4 +1,6 @@
-<?php include 'connect.php'; ?>
+<?php include 'connect.php';
+
+?>
 <!DOCTYPE html>
 <html>
 	<head>
@@ -39,13 +41,13 @@
         <option value="1" selected>Layout 1</option>
       </select>
       This is the status bar.
-      <div id = "infobar" style="display: none;">
-				<form action="">
-					<input type="hidden" id="identifier" name="identifier" value=""></input>
-				</form>
-
-
-      </div>
+      <div id = "infobar" style="display: none;">  </div>
+			<div id = "sidemenu">
+				<table>
+						<tr><td><button id="add">Add</button></td></tr>
+						<tr><td><button id="delete" disabled>Delete</button></td></tr>
+				</table>
+			</div>
 
 			<script type="module">
 			import * as THREE from '/f32ee/WeddingPlanner/three/build/three.module.js';
@@ -120,8 +122,8 @@
 					if (found[0].object.userData.draggable) {
 						draggable = found[0].object;
 						console.log(`found draggable ${draggable.userData.name}`);
-					//	document.getElementById("identifier").value = draggable.userData.name;
 						document.getElementById("infobar").style.display = "";
+						document.getElementById("delete").disabled = false;
 						findAssetInfo(draggable.userData.name);
 						//found[0].object.material.color.set(0xff0000);
 					}
@@ -143,6 +145,11 @@
 			moveMouse.x = (event.clientX / window.innerWidth) * 2 - 1;
 			moveMouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
 			});
+
+			document.getElementById( 'delete' ).addEventListener( 'click', function () {
+				removeObject('a');
+				console.log('delete is clicked');
+			} );
 			//plane
 			function createFloor() {
 				let pos = { x: 0, y: -1, z: 0 };
@@ -161,7 +168,7 @@
 
 			}
 
-			function createAsset(modelPath,x,y,z) {
+			function createAsset(id,modelPath,x,y,z) {
 				const objLoader = new OBJLoader();
 
 				objLoader.loadAsync('./assets/' + modelPath).then((group) => {
@@ -182,12 +189,19 @@
 
 					asset.userData.draggable = true;
 					asset.userData.name = '' + modelPath;
+					asset.name = '' + id;
 
-					//console.log(`created asset ${asset.userData.name}`);
+					console.log(`created asset ${asset.name}`);
 
 					scene.add(asset);
 				})
 			}
+			function removeObject(name) {
+				var obj = scene.getObjectByName(name);
+				scene.remove(obj);
+			}
+
+
 
 			function dragObject() {
 				if (draggable != null) {
@@ -211,17 +225,22 @@
 				$num_results = $result->num_rows;
 				for($i=0; $i<$num_results; $i++) {
 					$row = $result->fetch_assoc();
+					$sceneid = $row['sceneID'];
 					$filePath = $row['filePath'];
 					$px = $row['Px'];
 					$py = $row['Py'];
 					$pz = $row['Pz'];
 			?>
 				//console.log('<?php echo $filePath;?>');
-				createAsset('<?php echo $filePath;?>',
+
+				createAsset('<?php echo $sceneid;?>',
+											'<?php echo $filePath;?>',
 											<?php echo $px, "," , $py , "," , $pz;?>);
 			<?php
 				}
+
 			?>
+
 			createFloor();
 			//Animate
 			const animate = function() {
@@ -229,8 +248,8 @@
 				requestAnimationFrame( animate );
 				renderer.render(scene,camera);
 			};
-			animate();
 
+			animate();
 			</script>
 
     </div>
