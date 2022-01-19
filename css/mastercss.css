@@ -85,8 +85,28 @@ select {
 }
 
 button {
-  margin-top: 12px;
-  margin-right: 8px;
-  width: 88px;
-  height: 64px;
+  margin-left: 24px;
+  margin-bottom: 12px;
+}
+#sidemenu {
+  position: absolute;
+  text-align: center;
+  top: 60px;
+  left: 290px;
+  width: auto;
+  z-index: 100;
+  background: rgba(255, 255, 255, 0.7);
+  border-radius: 4px;
+}
+#sidemenu button {
+  margin: 8px;
+  width: 48px;
+  height: 48px;
+  border-radius: 24px;
+  padding: 2px;
+  background-color: #EBE1E1;
+  font-family: optima;
+}
+#sidemenu button:disabled {
+  opacity: 40%;
 }
