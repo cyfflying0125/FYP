@@ -4,7 +4,9 @@ function dropdown(name) {
     dropdownContent.style.display = "none";
   } else dropdownContent.style.display = "block";
 }
-function openDropdown() {
+function openDropdownAdd() {
+  document.getElementById('actionBtn').value = 'add';
+  document.getElementById('dropdownAdd').style.top = "80px";
   if (document.getElementById('dropdownAdd').style.display !== "block") {
     document.getElementById('dropdownAdd').style.display = "block";
     document.getElementById('add').style.fontWeight = "bold";
@@ -14,6 +16,19 @@ function openDropdown() {
     document.getElementById('add').style.fontWeight = "";
   }
 
+}
+function openDropdownSwap() {
+
+  document.getElementById('actionBtn').value = 'swap';
+  document.getElementById('dropdownAdd').style.top = "200px";
+  if (document.getElementById('dropdownAdd').style.display !== "block") {
+    document.getElementById('dropdownAdd').style.display = "block";
+    document.getElementById('swap').style.fontWeight = "bold";
+
+  } else {
+    document.getElementById('dropdownAdd').style.display = "none";
+    document.getElementById('swap').style.fontWeight = "";
+  }
 }
 
 function addObj(path,r,s) {
