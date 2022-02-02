@@ -45,9 +45,11 @@
       <div id = "infobar" style="display: none;">  </div>
 			<div id = "sidemenu">
 				<table>
-						<tr><td><button id="add" onclick="openDropdown();">Add</button></td></tr>
+						<input type="hidden" id="actionBtn" value="">
+						<tr><td><button id="add" onclick="openDropdownAdd();">Add</button></td></tr>
 						<tr><td><button id="delete" disabled>Delete</button>
 										<input type="hidden" id="currentObj" value=""></td></tr>
+						<tr><td><button id="swap" onclick="openDropdownSwap();">Swap</button></td></tr>
 				</table>
 			</div>
 			<?php
@@ -70,6 +72,7 @@
 								<a href="#" class ='selectObj' onclick="addObj('<?php echo $row['filePath']; ?>',
 									<?php echo $row['rotation'],',',$row['scale'];?>);">	<?php echo $row['description']; ?></a>
 								<?php
+
 							}
 						}
 					?>
@@ -201,11 +204,18 @@
 					var r = document.getElementById("rotation").value;
 					var s = document.getElementById("scale").value;
 
-					console.log('path=',path);
-					console.log('rotation=',r);
-					console.log('scale=',s);
-					createAsset(null,path,20,0,20,r,s);
+					if (document.getElementById('actionBtn').value == 'add') {
+						createAsset(null,path,20,0,20,r,s);
+						console.log('actionbtn = add');
+					} else if (document.getElementById('actionBtn').value == 'swap') {
+						console.log('actionbtn = swap');
+						var obj = document.getElementById("currentObj").value + '';
+						removeObject(obj);
+						
+					}
+
 				} );
+
 			}
 
 
