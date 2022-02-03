@@ -216,7 +216,7 @@
 						var y = obj.position.y;
 						var z = obj.position.z;
 						createAsset(null,path,x,y,z,r,s);
-						
+
 						var today = new Date();
 						document.getElementById('status').innerHTML = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds() + " A new design was implemented (" + path + ").";
 					}
@@ -256,20 +256,36 @@
 				}
 			}
 			//plane
-			function createFloor() {
-				let pos = { x: 0, y: -1, z: 0 };
-				let scale = { x: 100, y: 2, z: 100 };
+			function createBase() {
+				const loader = new GLTFLoader();
+				loader.load(
+					// resource URL
+					'./assets/base1.glb',
+					// called when the resource is loaded
+					function ( gltf ) {
+						gltf.scene.scale.set(20,20,20);
+						scene.add( gltf.scene );
 
-				let blockPlane = new THREE.Mesh(new THREE.BoxBufferGeometry(),
-						 new THREE.MeshPhongMaterial({ color: 0xf9c834 }));
-				blockPlane.position.set(pos.x, pos.y, pos.z);
-				blockPlane.scale.set(scale.x, scale.y, scale.z);
-				blockPlane.castShadow = true;
-				blockPlane.receiveShadow = true;
+						gltf.animations; // Array<THREE.AnimationClip>
+						gltf.scene; // THREE.Group
+						gltf.scenes; // Array<THREE.Group>
+						gltf.cameras; // Array<THREE.Camera>
+						gltf.asset; // Object
 
-				blockPlane.userData.draggable = false;
-				blockPlane.userData.ground = true;
-				scene.add(blockPlane);
+					},
+					// called while loading is progressing
+					function ( xhr ) {
+
+						console.log( ( xhr.loaded / xhr.total * 100 ) + '% loaded' );
+
+					},
+					// called when loading has errors
+					function ( error ) {
+
+						console.log( 'An error happened' );
+
+					}
+				);
 
 			}
 
@@ -331,7 +347,7 @@
 
 			?>
 
-			createFloor();
+			createBase();
 			//Animate
 			const animate = function() {
 				dragObject();
