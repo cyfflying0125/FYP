@@ -1,6 +1,4 @@
-<?php include 'connect.php';
-
-?>
+<?php include 'connect.php';?>
 <!DOCTYPE html>
 <html>
 	<head>
@@ -41,7 +39,7 @@
         <option value="0" hidden>Select a Layout...</option>
         <option value="1" selected>Layout 1</option>
       </select>
-      This is the status bar.
+      <label id="status">This is the status bar.</label>
       <div id = "infobar" style="display: none;">  </div>
 			<div id = "sidemenu">
 				<table>
@@ -192,7 +190,8 @@
 				var obj = document.getElementById("currentObj").value + '';
 				if(confirm("Are you sure you want to delete this item?")){
 					removeObject(obj);
-					console.log('delete is clicked on ' + obj);
+					var today = new Date();
+					document.getElementById('status').innerHTML = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds() + " Item was deleted.";
 				}
 			} );
 
@@ -206,12 +205,20 @@
 
 					if (document.getElementById('actionBtn').value == 'add') {
 						createAsset(null,path,20,0,20,r,s);
-						console.log('actionbtn = add');
+						var today = new Date();
+						document.getElementById('status').innerHTML = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds() + " Object '" + path + "' was created.";
+						//console.log('actionbtn = add');
 					} else if (document.getElementById('actionBtn').value == 'swap') {
-						console.log('actionbtn = swap');
-						var obj = document.getElementById("currentObj").value + '';
-						removeObject(obj);
+						//console.log('actionbtn = swap');
+						var objName = document.getElementById("currentObj").value + '';
+						var obj = removeObject(objName);
+						var x = obj.position.x;
+						var y = obj.position.y;
+						var z = obj.position.z;
+						createAsset(null,path,x,y,z,r,s);
 						
+						var today = new Date();
+						document.getElementById('status').innerHTML = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds() + " A new design was implemented (" + path + ").";
 					}
 
 				} );
@@ -297,6 +304,7 @@
 			function removeObject(name) {
 				var obj = scene.getObjectByName(name);
 				scene.remove(obj);
+				return obj;
 			}
 			<?php
 				$query = "SELECT * FROM scene";
