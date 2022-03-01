@@ -6,7 +6,7 @@ function dropdown(name) {
 }
 function openDropdownAdd() {
   document.getElementById('actionBtn').value = 'add';
-  document.getElementById('dropdownAdd').style.top = "80px";
+  document.getElementById('dropdownAdd').style.top = "260px";
   if (document.getElementById('dropdownAdd').style.display !== "block") {
     document.getElementById('dropdownAdd').style.display = "block";
     document.getElementById('add').style.fontWeight = "bold";
@@ -20,7 +20,7 @@ function openDropdownAdd() {
 function openDropdownSwap() {
 
   document.getElementById('actionBtn').value = 'swap';
-  document.getElementById('dropdownAdd').style.top = "200px";
+  document.getElementById('dropdownAdd').style.top = "380px";
   if (document.getElementById('dropdownAdd').style.display !== "block") {
     document.getElementById('dropdownAdd').style.display = "block";
     document.getElementById('swap').style.fontWeight = "bold";
