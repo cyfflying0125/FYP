@@ -12,28 +12,28 @@
 	<body>
 
     <div id="wrapper">
-    <div class="leftpanel">
-      <table class="userProfileTable">
-        <tr>
-          <td><img src="icon/profile.png" alt="profile.png" width="88" height="88" style="background:white; border-radius: 44px;"></td>
-          <th>ALBUS TAN &hearts; <br> ALICE WONG</th>
-        </tr>
-      </table>
-      <div class = "leftnav">
-        <table>
-          <tr><th>56</th></tr>
-          <tr><td> Days to the BIG DAY <br>
-          - <b>11 MAR 2022</b></td></tr>
-        </table>
-        <ul>
-         <li><a href="index.php">Venue</a></li>
-         <li><a href="calendar.html">Calendar</a></li>
-         <li><a href="budget.html">Budget</a></li>
-         <li><a href="community.html">Community</a></li>
-         <li><a href="account.html">Account Settings</a></li>
-        </ul>
-      </div>
-    </div>
+		<nav>
+			<div style="background-image: url('icon/TopBanner.png');">
+			<table>
+				<tr>
+					<td><img src="icon/profile.png" alt="profile.png" width="88" height="88" style="background:white; border-radius: 44px;"></td>
+
+				</tr>
+				<tr><td>Albus & Charis</td>
+				<th><ul>
+					 <li><a href="index.php">Venue</a></li>
+					 <li><a href="calendar.html">Calendar</a></li>
+					 <li><a href="budget.html">Budget</a></li>
+					 <li><a href="#">Community</a></li>
+					 <li><a href="#">Account Settings</a></li>
+					</ul></th></tr>
+			</table>
+
+
+			<hr style="border-top: 0.5px solid #F0EDED; opacity: 0.05; margin-bottom: 0;">
+			</div>
+		</nav>
+
     <div id = "canvas">
       <select name="venue" id="venue">
         <option value="0" hidden>Select a Layout...</option>
@@ -100,7 +100,7 @@
 			//Renderer
 			const renderer = new THREE.WebGLRenderer({antialias: true});
 			renderer.setSize(window.innerWidth, window.innerHeight);
-			renderer.setSize(1080,580);
+
 			const canvas = document.getElementById('canvas');
 			canvas.appendChild(renderer.domElement);
 
@@ -377,22 +377,22 @@
 
 						case 'ArrowUp':
 						case 'KeyW':
-							PLcontrols.moveForward(0.75);
+							PLcontrols.moveForward(4);
 							break;
 
 						case 'ArrowLeft':
 						case 'KeyA':
-							PLcontrols.moveRight(-0.75);
+							PLcontrols.moveRight(-4);
 							break;
 
 						case 'ArrowDown':
 						case 'KeyS':
-							PLcontrols.moveForward(-0.75);
+							PLcontrols.moveForward(-4);
 							break;
 
 						case 'ArrowRight':
 						case 'KeyD':
-							PLcontrols.moveRight(0.75);
+							PLcontrols.moveRight(4);
 							break;
 
 					}
