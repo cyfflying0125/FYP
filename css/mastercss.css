@@ -16,69 +16,52 @@ body {
   position: relative;
 }
 
-.leftpanel {
-  width: 20%;
-  background: #AD797A;
-  height:100%;
-  float:left;
-  position: absolute;
-}
+
 .userProfileTable {
   margin:48px 24px 24px;
   box-shadow: 0;
 }
+
 .userProfileTable th {
   padding: 12px;
   font-weight: normal;
   color: white;
 }
-.leftnav {
-  background-color: #EBE1E1;
-  height:100%;
-  width: 100%;
-  position: absolute;
-  margin-top: 72px;
-}
-.leftnav table {
-  background: #F7F2F2;
-  border-radius: 12px;
-  color: ##AD797A;
-  font-weight: lighter;
-  margin: auto;
-  padding: 16px 24px 24px;
-  transform: translate(0, -30%);
+
+nav table {
+  padding: 24px;
+  margin: 0 0 4px 24px;
   text-align: center;
 }
-.leftnav table th{
-  font-size: 64px;
-  font-weight: normal;
-}
 
-.leftnav ul {
+
+ul {
   list-style-type: none;
+  overflow: hidden;
+  margin: 0;
 }
 
-.leftnav li {
-  margin-bottom: 20px;
+li {
   margin-left: 8px;
+  display: inline-block;
 }
 
-.leftnav li a {
+li a {
   text-decoration: none;
   color: #AD797A;
-  font-size: 20px;
+  margin-left: 24px;
 }
-.leftnav li a:hover {
+li a:hover {
   text-decoration: none;
   font-weight: bold;
   color: #8B5A5B;
-  font-size: 20px;
 }
 
 #canvas {
-  margin-left: 20%;
+  margin-left: 0%;
   padding: 12px;
   text-align: left;
+  background-color: transparent;
 }
 select {
   margin: 12px;
@@ -88,11 +71,12 @@ button {
   margin-left: 24px;
   margin-bottom: 12px;
 }
+
 #sidemenu {
   position: absolute;
   text-align: center;
-  top: 60px;
-  left: 290px;
+  top: 260px;
+  left: 40px;
   width: auto;
   z-index: 100;
   background-color: rgba(255, 255, 255, 0.6);
@@ -114,12 +98,10 @@ button {
 #dropdownAdd {
   position: absolute;
   display: none;
-  top: 80px;
-  left: 366px;
+  left: 120px;
   background-color: rgba(255, 237, 236, 0.8);
-  width: 180px;
+  width: auto;
   padding: 20px 0;
-
   border-radius: 16px;
   border: 1px solid #AD797A;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
@@ -135,6 +117,7 @@ button {
   display: block;
   border: none;
   background: none;
+  padding-right: 20px;
   width:100%;
   text-align: left;
   outline: none;
@@ -150,7 +133,7 @@ button {
 .dropdown-container {
   display: none;
   background-color: rgba(255, 255, 255, 0.8);
-  padding: 12px 8px;
+  padding: 12px;
 
 }
 .dropdown-container a {
