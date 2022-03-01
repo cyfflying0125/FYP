@@ -39,7 +39,7 @@
         <option value="0" hidden>Select a Layout...</option>
         <option value="1" selected>Layout 1</option>
       </select>
-      <label id="status">This is the status bar.</label>
+      <label id="status"> </label>
       <div id = "infobar" style="display: none;">  </div>
 			<div id = "sidemenu">
 				<table>
@@ -88,6 +88,7 @@
 			import { GLTFLoader } from '/f32ee/WeddingPlanner/three/examples/jsm/loaders/GLTFLoader.js';
 			import { OBJLoader } from '/f32ee/WeddingPlanner/three/examples/jsm/loaders/OBJLoader.js';
 			import { OrbitControls } from '/f32ee/WeddingPlanner/three/examples/jsm/controls/OrbitControls.js';
+			import { PointerLockControls } from '/f32ee/WeddingPlanner/three/examples/jsm/controls/PointerLockControls.js';
 
 			//Add new scene
 			const scene = new THREE.Scene();
@@ -104,13 +105,16 @@
 			canvas.appendChild(renderer.domElement);
 
 			//Controls
+			const PLcontrols = new PointerLockControls( camera, document.body );
 			const controls = new OrbitControls( camera, renderer.domElement);
 			controls.maxPolarAngle = Math.PI/2;
 			controls.minDistance = 60;
 			controls.maxDistance = 800;
-			camera.position.set(5, 12, 24);
 			controls.update();
 
+
+
+			camera.position.set(5, 12, 24);
 			//Resize
 			window.addEventListener('resize', function() {
 				var width = window.innerWidth;
@@ -179,6 +183,7 @@
 				xhttp.open("GET", "infobar.php?name="+str);
 				xhttp.send();
 				}
+
 
 
 			window.addEventListener('mousemove', event => {
@@ -264,6 +269,7 @@
 					// called when the resource is loaded
 					function ( gltf ) {
 						gltf.scene.scale.set(20,20,20);
+						gltf.scene.userData.ground = true;
 						scene.add( gltf.scene );
 
 						gltf.animations; // Array<THREE.AnimationClip>
@@ -276,7 +282,8 @@
 					// called while loading is progressing
 					function ( xhr ) {
 
-						console.log( ( xhr.loaded / xhr.total * 100 ) + '% loaded' );
+						document.getElementById('status').innerHTML = ( xhr.loaded / xhr.total * 100 ).toFixed(1) + '% of Scene Loaded' ;
+						//console.log( ( xhr.loaded / xhr.total * 100 ) + '% loaded' );
 
 					},
 					// called when loading has errors
@@ -288,6 +295,22 @@
 				);
 
 			}
+			function createFloor() {
+							let pos = { x: 0, y: -1, z: 0 };
+							let scale = { x: 100, y: 1, z: 100 };
+
+							let blockPlane = new THREE.Mesh(new THREE.BoxBufferGeometry(),
+									 new THREE.MeshPhongMaterial({ color: 0xffffff,transparent:true }));
+							blockPlane.position.set(pos.x, pos.y, pos.z);
+							blockPlane.scale.set(scale.x, scale.y, scale.z);
+							blockPlane.castShadow = true;
+							blockPlane.receiveShadow = true;
+
+							blockPlane.userData.draggable = false;
+							blockPlane.userData.ground = true;
+							scene.add(blockPlane);
+
+						}
 
 			function createAsset(id,modelPath,x,y,z,r,s) {
 				const objLoader = new OBJLoader();
@@ -347,12 +370,48 @@
 
 			?>
 
+
+			const onKeyDown = function ( event ) {
+
+					switch ( event.code ) {
+
+						case 'ArrowUp':
+						case 'KeyW':
+							PLcontrols.moveForward(0.75);
+							break;
+
+						case 'ArrowLeft':
+						case 'KeyA':
+							PLcontrols.moveRight(-0.75);
+							break;
+
+						case 'ArrowDown':
+						case 'KeyS':
+							PLcontrols.moveForward(-0.75);
+							break;
+
+						case 'ArrowRight':
+						case 'KeyD':
+							PLcontrols.moveRight(0.75);
+							break;
+
+					}
+
+			};
+			document.addEventListener( 'keydown', onKeyDown );
+
+
+
 			createBase();
+			createFloor();
 			//Animate
 			const animate = function() {
 				dragObject();
 				requestAnimationFrame( animate );
+
 				renderer.render(scene,camera);
+
+
 			};
 
 			animate();
