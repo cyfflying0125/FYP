@@ -1,13 +1,14 @@
-#calendar {
+#calendar, #list {
   margin: 24px;
   background-color: #E7E3E0;
   padding:24px;
   width: 720px;
   border-radius: 4px;
-  float:left;
-  height: 100%;
-}
 
+}
+#leftcol {
+  float:left;
+}
 .month {
 
   display: flex;
@@ -73,13 +74,13 @@ hr {
   display: flex;
   justify-content: center;
   align-items: center;
-  transition: background-color 0.2s;
   border-radius: 4px;
 }
 
-.days div:hover:not(.today) {
-  background-color: white;
+.days div:hover {
+  background-color: rgba(255, 255, 255, 0.5);
   cursor: pointer;
+  color:inherit;
 
 }
 .prev-date, .next-date {
