@@ -1,3 +1,7 @@
+<?php
+  include 'connect.php';
+  date_default_timezone_set('Asia/Singapore');
+?>
 <!DOCTYPE html>
 <html>
 	<head>
@@ -33,12 +37,13 @@
 			</div>
 		</nav>
 
+    <div id="leftcol">
     <div id="calendar">
       <div class="month">
-         <i class="prev"><img src="icon/back.png" width="32" height="32" style=""> </i>
+         <i class="prev"><img src="icon/back.png" width="32" height="32" style="" onclick="addEL();"> </i>
          <div class="date">
            <h1>March</h1>
-           <p></p>
+
          </div>
          <i class="next"><img src="icon/back.png" width="32" height="32" style="transform:rotate(180deg);"> </i>
        </div>
@@ -54,6 +59,12 @@
        </div>
        <div class="days"></div>
     </div>
+    <div id = list>
+      <h2>TIMELINE</h2>
+    </div>
+
+
+  </div>
     <div id="schedule">
       <h2>Event Scheduled</h2>
       <table class = "scheduled">
@@ -69,21 +80,22 @@
                 </td></tr>
       </table>
       <h2>Add a New Event</h2>
-      <form action="/form/submit" method = "post">
+      <form action="addNew.php" method = "post">
       <table class="addNew">
         <tr><th>Title* </th><td><input type="text" required></td></tr>
         <tr><th>Colour </th><td><input id = "colorpicker" type="color" value ="#bbbbbb"></tr>
-        <tr><th>Date</th><td>DD-MMM-YYYY</td></tr>
+        <tr><th>Date</th><td id="current"><?php echo date("d M Y");?></td></tr>
         <tr><th>Start Time</th><td><input type="time" value="13:00"></td></tr>
         <tr><th>Agenda </th><td><input type="textarea"></td></tr>
         <tfoot><tr><td colspan="2"><input class = "sec-btn" type="reset" value="Clear">
           <input class = "pri-btn" type="submit" value="+ Add to Calendar"></td></tr></tfoot>
       </table>
       </form>
+    </div>
 
     </div>
-    </div>
 <script type="text/javascript" src="js/calendar.js"></script>
+<script type="text/javascript" src="js/scheduler.js"></script>
 
 
 </body>
