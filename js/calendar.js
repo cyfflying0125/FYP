@@ -1,3 +1,4 @@
+
 const date = new Date();
 
 const renderCalendar = () => {
@@ -45,11 +46,10 @@ const renderCalendar = () => {
 
   document.querySelector(".date h1").innerHTML = months[date.getMonth()] + " " + date.getFullYear();
 
-  document.querySelector(".date p").innerHTML = new Date().toDateString();
 
   let days = "";
 
-  
+
   for (let x = firstDayIndex; x > 0; x--) {
     days += `<div class="prev-date">${prevLastDay - x + 1}</div>`;
   }
@@ -57,11 +57,12 @@ const renderCalendar = () => {
   for (let i = 1; i <= lastDay; i++) {
     if (
       i === new Date().getDate() &&
-      date.getMonth() === new Date().getMonth()
+      date.getMonth() === new Date().getMonth()&&
+      date.getYear() === new Date().getYear()
     ) {
       days += `<div class="today">${i}</div>`;
     } else {
-      days += `<div>${i}</div>`;
+      days += `<div class="current-date">${i}</div>`;
     }
   }
 
@@ -76,15 +77,52 @@ const renderCalendar = () => {
 document.querySelector(".prev").addEventListener("click", () => {
   date.setMonth(date.getMonth() - 1);
   renderCalendar();
+  document.querySelectorAll('.current-date').forEach(item => {
+    item.addEventListener('click', event => {
+      if (prevSelected != null) prevSelected.style.backgroundColor = '#E7E3E0';
+
+      var dateSelected = event.target.innerHTML;
+      var monthYear = document.querySelector(".date h1").innerHTML;
+      document.getElementById('current').innerHTML = dateSelected + " " + monthYear;
+      event.target.style.backgroundColor = 'white';
+      prevSelected = event.target;
+    })
+  });
+
+  document.querySelector(".today").addEventListener("click", () => {
+    if (prevSelected != null) prevSelected.style.backgroundColor = '#E7E3E0';
+    var dateSelected = event.target.innerHTML;
+    var monthYear = document.querySelector(".date h1").innerHTML;
+    document.getElementById('current').innerHTML = dateSelected + " " + monthYear;
+    prevSelected = null;
+  });
 });
 
 
 document.querySelector(".next").addEventListener("click", () => {
   date.setMonth(date.getMonth() + 1);
   renderCalendar();
+  document.querySelectorAll('.current-date').forEach(item => {
+    item.addEventListener('click', event => {
+      if (prevSelected != null) prevSelected.style.backgroundColor = '#E7E3E0';
+
+      var dateSelected = event.target.innerHTML;
+      var monthYear = document.querySelector(".date h1").innerHTML;
+      document.getElementById('current').innerHTML = dateSelected + " " + monthYear;
+      event.target.style.backgroundColor = 'white';
+      prevSelected = event.target;
+    })
+  });
+
+  document.querySelector(".today").addEventListener("click", () => {
+    if (prevSelected != null) prevSelected.style.backgroundColor = '#E7E3E0';
+    var dateSelected = event.target.innerHTML;
+    var monthYear = document.querySelector(".date h1").innerHTML;
+    document.getElementById('current').innerHTML = dateSelected + " " + monthYear;
+    prevSelected = null;
+  });
 
 });
-
 
 
 renderCalendar();
