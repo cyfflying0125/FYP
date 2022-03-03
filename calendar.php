@@ -11,8 +11,6 @@
     <link rel="stylesheet" href="css/mastercss.css">
     <link rel="stylesheet" href="css/calendarcss.css">
   	<title>Wedding Planner</title>
-		<script type="text/javascript" src="js/buttonManager.js"></script>
-
 	</head>
 	<body>
 
