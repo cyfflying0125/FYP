@@ -116,11 +116,11 @@ h2 {
   letter-spacing: 1px;
   font-weight: normal;
 }
-.scheduled {
+.scheduled,#list table {
   width: 100%;
 }
 
-.scheduled td {
+.scheduled td, #list td {
   border: solid 2px #E7E3E0;
   padding: 20px 24px;
   background-color: #F0EDED;
@@ -133,6 +133,7 @@ h2 {
   border-radius: 50%;
   display: inline-block;
   margin-right: 8px;
+  border: 2px solid white;
 }
 .addNew {
   width: 100%;
@@ -183,4 +184,8 @@ tfoot {
   font-size: inherit;
   color: inherit;
   cursor: default;
+}
+#list th {
+  vertical-align: top;
+  padding-top: 8px;
 }
