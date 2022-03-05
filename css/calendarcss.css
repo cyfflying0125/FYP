@@ -130,7 +130,6 @@ h2 {
 .dot {
   height: 12px;
   width: 12px;
-  background-color: #bbb;
   border-radius: 50%;
   display: inline-block;
   margin-right: 8px;
@@ -178,6 +177,10 @@ tfoot {
   background-color: white;
   border: 0;
 }
-.sec-btn {
-
+#currentDate {
+  border: 0;
+  font-family: inherit;
+  font-size: inherit;
+  color: inherit;
+  cursor: default;
 }
