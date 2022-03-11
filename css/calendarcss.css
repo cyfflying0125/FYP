@@ -9,6 +9,18 @@
 #leftcol {
   float:left;
 }
+
+#schedule {
+  float: left;
+}
+#dayEvent, #weddingDay {
+  background-color: #E7E3E0;
+  width: 500px;
+
+  margin: 24px 0;
+  padding:24px;
+  border-radius: 4px;
+}
 .month {
 
   display: flex;
@@ -96,26 +108,14 @@ hr {
   opacity: 0.6;
 }
 
-#schedule {
-  background-color: #E7E3E0;
-  width: 500px;
-  float: left;
-  margin: 24px 0;
-  padding:24px;
-  border-radius: 4px;
-}
+
 #wrapper:after{
   content: "";
   display: table;
   clear: both;
 }
 
-h2 {
-  margin-left: 8px;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  font-weight: normal;
-}
+
 .scheduled,#list table {
   width: 100%;
 }
@@ -140,11 +140,9 @@ h2 {
 }
 th {
   text-align: left;
-  padding-left: 8px;
 }
-th, td {
-  height: 36px;
-}
+
+
 input {
   margin: 4px 0;
   width: 90%;
@@ -188,4 +186,15 @@ tfoot {
 #list th {
   vertical-align: top;
   padding-top: 8px;
+}
+.programme {
+  width: 96%;
+  margin: auto;
+}
+.programme td {
+  text-align: right;
+}
+.programme th {
+  font-weight: normal;
+  text-align: left;
 }
