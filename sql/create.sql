@@ -22,3 +22,19 @@ CREATE TABLE assets (
   remarks varchar( 100 ) ,
 
 )
+
+CREATE TABLE calendar (
+  eventID int PRIMARY KEY NOT NULL AUTO_INCREMENT,
+  title varchar( 30 ) NOT NULL ,
+  date date NOT NULL ,
+  start_time time,
+  colour varchar( 10 ) NOT NULL ,
+  location varchar( 30 ),
+  agenda varchar( 50 )
+)
+
+CREATE TABLE programme (
+  activityID int PRIMARY KEY NOT NULL AUTO_INCREMENT,
+  title varchar( 30 ) NOT NULL ,
+  start_time time NOT NULL
+)
