@@ -37,13 +37,12 @@
 			<table>
 				<tr>
 					<td><img src="icon/profile.png" alt="profile.png" width="88" height="88" style="background:white; border-radius: 44px;"></td>
-
 				</tr>
 				<tr><td>Albus & Charis</td>
 				<th><ul>
 					 <li><a href="index.php">Venue</a></li>
 					 <li><a href="calendar.php">Calendar</a></li>
-					 <li><a href="budget.html">Budget</a></li>
+					 <li><a href="people.php">People</a></li>
 					 <li><a href="#">Community</a></li>
 					 <li><a href="#">Account Settings</a></li>
 					</ul></th></tr>
@@ -116,6 +115,7 @@
   </div>
 
     <div id="schedule">
+      <div id="dayEvent">
       <h2>Event Scheduled</h2>
       <table class = "scheduled" id = "event"></table>
       <h2>Add a New Event</h2>
@@ -131,6 +131,44 @@
           <input class = "pri-btn" type="submit" value="+ Add to Calendar"></td></tr></tfoot>
       </table>
       </form>
+      </div>
+      <div id="weddingDay">
+        <table>
+          <tr><td><img src="icon/heart.png" width="64" height="64"></td>
+            <td><h2 style="font-size: 20px;"> Wedding Ceremony Programme <br> <small>30 Apr 2022 |
+              <span id="countDown"></span></small></h2></td>
+          </tr>
+          <script>
+            var countDownDate = new Date("30 Apr, 2022 00:00:00").getTime();
+            var x = setInterval(function(){
+              var now = new Date().getTime();
+              var distance = countDownDate - now;
+              var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+              if (days > 0) document.getElementById('countDown').innerHTML = "D-" + days;
+            }, 1000);
+          </script>
+        </table>
+        <hr style="border-top: 1px solid #F0EDED; opacity: 0.5; margin: 8px 0;">
+        <br>
+        <table class="programme">
+          <?php
+          $queryProgramme = "SELECT * FROM programme";
+          $resultProgramme = $db->query($queryProgramme);
+          $num_results = $resultProgramme->num_rows;
+          for($i=0; $i<$num_results; $i++) {
+            $row = $resultProgramme->fetch_assoc();
+            echo "<tr><th>";
+            echo $row['title'];
+            echo "</th><td>·················· ";
+            $timeProg = $row['start_time'];
+            $timeFormattedProg = date("G:i", strtotime("$timeProg"));
+            echo $timeFormattedProg;
+            echo "</td></tr>";
+          }
+          ?>
+        </table>
+          <input class = "pri-btn" type="submit" value="Customise Activites" style="margin:24px 188px 12px;">
+      </div>
     </div>
 
     </div>
