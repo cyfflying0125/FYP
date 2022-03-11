@@ -1,0 +1,33 @@
+#view {
+  margin: 24px;
+  background-color: #E7E3E0;
+  padding:24px;
+  width: 92%;
+  border-radius: 4px;
+}
+
+.card {
+  transition: 0.3s;
+  border-radius: 5px;
+  width: 240px;
+  height: 260px;
+  background-color: #F0EDED;
+}
+h4 {
+  letter-spacing: 1px;
+  font-weight: normal;
+  margin: 8px 0;
+}
+p {
+  margin: 8px 0;
+}
+.card img {
+  border-radius: 44px;
+  background-color: white;
+  margin: 20px 76px 0;
+  border: 8px solid white;
+}
+.container {
+  padding: 2px 16px;
+  text-align: center;
+}
