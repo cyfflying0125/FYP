@@ -114,8 +114,40 @@
         <?php
       }
        ?>
+
       <h2>Guest Invitation</h2>
-    <?php
+      
+      <?php
+      $query = "SELECT name, tableNumber FROM people WHERE category = 'Guest' ORDER BY tableNumber ASC";
+      $result = $db->query($query);
+      $num_results = $result->num_rows;
+      $guestArray = [];
+      for($i=0; $i<$num_results; $i++) {
+        $row = $result->fetch_assoc();
+        $guestName = $row['name'];
+        $table = $row['tableNumber'];
+        $guestArray += ["$guestName" => $table];
+      }
+
+      $tablePrinted = null;
+      $isTablePrinted = false;
+      foreach($guestArray as $key => $element) {
+        if($element != $tablePrinted) {
+          if($isTablePrinted == true) {
+            echo "</td></tr>";
+            echo "</table>";
+          }
+          echo "<table id='guestTable'>";
+          echo "<tr><th>TABLE ";
+          echo $element;
+          echo "</th></tr>";
+          echo "<tr><td>";
+          echo $key;
+          $tablePrinted = $element;
+          $isTablePrinted = true;
+        } else echo "<br>", $key;
+      }
+
     }?>
     </div>
     </div>
