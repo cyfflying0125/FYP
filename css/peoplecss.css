@@ -54,3 +54,29 @@ h4 {
 p {
   margin: 8px 0;
 }
+#guestTable {
+  border: 1px solid rgba(173,121,122,0.3);
+  width: 240px;
+  height: auto;
+  border-radius: 4px;
+  text-align: center;
+  border-spacing: 0;
+  display: inline-table;
+  margin-right: 12px;
+  margin-top: 8px;
+}
+
+#guestTable th {
+  text-align: center;
+  background-color: #AD797A;
+  color: white;
+  padding: 2px 0;
+
+}
+#guestTable td {
+  padding: 8px 0;
+  height: 160px;
+  vertical-align: middle;
+  background-color: #F0EDED;
+  line-height: 150%;
+}
