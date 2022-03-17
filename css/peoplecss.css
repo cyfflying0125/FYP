@@ -22,7 +22,6 @@
 }
 
 .card {
-  transition: 0.3s;
   border-radius: 5px;
   width: 240px;
   height: 260px;
@@ -79,4 +78,22 @@ p {
   vertical-align: middle;
   background-color: #F0EDED;
   line-height: 150%;
+}
+#attendance {
+  width: 80%;
+  margin: 20px;
+  padding: 12px;
+  border-radius: 4px;
+}
+#attendance th{
+  background-color: #F0EDED;
+  padding: 8px 0;
+}
+#attendance td{
+  text-align: center;
+  background-color: rgba(240,237,237,0.4);
+  padding: 4px 0;
+}
+#attendance tr:hover {
+  background-color: white;
 }
