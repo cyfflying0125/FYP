@@ -28,7 +28,7 @@
 				<th><ul>
 					 <li><a href="index.php">Venue</a></li>
 					 <li><a href="calendar.php">Calendar</a></li>
-					 <li><a href="people.php">People</a></li>
+					 <li><a href="people.php?viewmode=grid">People</a></li>
 					 <li><a href="#">Community</a></li>
 					 <li><a href="#">Account Settings</a></li>
 					</ul></th></tr>
@@ -116,7 +116,7 @@
        ?>
 
       <h2>Guest Invitation</h2>
-      
+
       <?php
       $query = "SELECT name, tableNumber FROM people WHERE category = 'Guest' ORDER BY tableNumber ASC";
       $result = $db->query($query);
@@ -147,6 +147,42 @@
           $isTablePrinted = true;
         } else echo "<br>", $key;
       }
+
+    } else if ($_GET['viewmode'] == 'list') {
+      ?>
+      <h2><div id="fullList" style="font-size: 18px;">
+        <a id="gridView" href="people.php?viewmode=grid">Grid View</a> |
+        <a id="ListView" href="people.php?viewmode=list">Full List</a></div>
+      </h2>
+      <?php
+      echo "<script>document.getElementById('ListView').style.fontWeight = 'bold';</script>";
+      $query = "SELECT * FROM people ORDER BY tableNumber ASC, people.group";
+      $result = $db->query($query);
+      $num_results = $result->num_rows;
+      echo "<table id='attendance'>";
+      echo "<tr>
+        <th>Name</th>
+        <th>Category</th>
+        <th>Role</th>
+        <th>Table Number</th>
+        <th>Confirmation</th>
+        <th>Remarks</th>
+        </tr>";
+      for($i=0; $i<$num_results; $i++) {
+        $row = $result->fetch_assoc();
+        ?>
+        <tr>
+          <td><div contenteditable><?php echo $row['name'];?></div></td>
+          <td><?php echo $row['category'];?></td>
+          <td><?php echo $row['role'];?></td>
+          <td><?php echo $row['tableNumber'];?></td>
+          <td><?php echo $row['confirmation'];?></td>
+          <td><?php echo $row['remarks'];?></td>
+        </tr>
+        <?php
+      }
+      echo "</table>";
+
 
     }?>
     </div>
