@@ -1,0 +1,70 @@
+
+#leftcol, #rightcol {
+  float:left;
+}
+#budgetTable {
+  margin: 24px;
+  background-color: #E7E3E0;
+  padding:24px;
+  width: 900px;
+  border-radius: 4px;
+}
+#budgetList {
+  width: 100%;
+}
+#budgetList tr:hover {
+  background-color: white;
+
+}
+#budgetList th {
+  background-color: #F0EDED;
+  padding: 12px;
+}
+#budgetList td {
+  background-color: rgba(240,237,237,0.4);
+  padding: 12px;
+  padding-left: 24px;
+  cursor: pointer;
+}
+
+#directory {
+  padding: 0;
+}
+#directory li {
+  display: block;
+  background-color: #F0EDED;
+  font-size: 18px;
+  height: 26px;
+  padding: 12px;
+  vertical-align: middle;
+  margin-top: 4px;
+
+}
+#directory li:hover {
+  background-color: white;
+}
+#directory a {
+  display: block;
+
+  height: 100%;
+  width: 100%;
+}
+#directory a:hover {
+  font-weight: normal;
+}
+
+#selector {
+  background-color: #E7E3E0;
+  width: 320px;
+
+  margin: 24px 0;
+  padding:24px;
+  border-radius: 4px;
+}
+
+
+#wrapper:after{
+  content: "";
+  display: table;
+  clear: both;
+}
