@@ -43,13 +43,13 @@
     <div id="leftcol">
     <div id="budgetTable">
       <h2>Budget Table: <?php echo $title;
-      if ($title != "total") {?>
+      if ($title != "overview") {?>
         <input class = "pri-btn" type="submit" value="Save Changes >" style="float: right; margin:0 0 12px;">
       <?php }?>
       </h2>
       <table id="budgetList">
 
-      <?php if ($title == "total") {
+      <?php if ($title == "overview") {
         ?>
         <tr><th>Category</th>
           <th>Total Estimated($)</th>
@@ -85,7 +85,10 @@
         ?>
         <tr><th align="right">Total</th>
           <th align="left"><?php echo number_format((float)$sumEstimate, 2, '.', '');?></th>
-          <th align="left"><?php if ($sumActual != 0) echo number_format((float)$sumActual, 2, '.', '');?></th>
+          <th align="left"><?php
+          if ($sumActual != 0) {
+            echo number_format((float)$sumActual, 2, '.', '');
+          } else echo "0.00";?></th>
           <th align="left"><?php if ($sumActual != 0) echo $sumEstimate - $sumActual;?></th>
         </tr>
       </table>
@@ -122,7 +125,7 @@
           ?>
           <tr><th><?php echo $row['category'];?></th>
             <td><span class = "bar" style="width:<?php echo $width;?>px;">&nbsp;</span><span class = "exceed" style="width:<?php echo $exceed;?>px;"><?php
-              if($sumA > $sumE) echo '- ',$sumA - $sumE;?></span>
+              if($sumA > $sumE) echo $sumA - $sumE;?></span>
             <?php echo "<b>", $row['SUM(actual)'],"</b>";
                   if($percentage != 0) echo " [",$percentage,"%]";?>
                 </td></tr>
@@ -176,7 +179,10 @@
         ?>
         <tr><th align="right" colspan="2">Total</th>
           <th align="left" id = "totalE"><?php echo number_format((float)$sumEstimate, 2, '.', '');?></th>
-          <th align="left" id = "totalA"><?php if ($sumActual != 0) echo number_format((float)$sumActual, 2, '.', '');?></th>
+          <th align="left" id = "totalA"><?php
+          if ($sumActual != 0) {
+            echo number_format((float)$sumActual, 2, '.', '');
+          } else echo "0.00";?></th>
           <th align="left" id = "totalD"><?php if ($sumActual != 0) echo $sumEstimate - $sumActual;?></th>
         </tr>
       </table>
@@ -192,7 +198,7 @@
       <div id="selector">
       <h2>Directory</h2>
       <ul id="directory">
-        <li><a href='budget.php?category=total'><b>Grand Total</b></a></li>
+        <li><a href='budget.php?category=overview'><b>Overview</b></a></li>
         <?php
         $query = "SELECT DISTINCT category FROM budget";
         $result = $db->query($query);
