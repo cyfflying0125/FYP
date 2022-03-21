@@ -65,7 +65,7 @@
   width: 0;
   display: inline-block;
   margin-right: 8px;
-
+  max-height: 20px;
 }
 .exceed:hover{
   background-color: rgba(255,0,0,0.6);
