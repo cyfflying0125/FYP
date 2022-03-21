@@ -42,7 +42,11 @@
 
     <div id="leftcol">
     <div id="budgetTable">
-      <h2>Budget Table: <?php echo $title;?></h2>
+      <h2>Budget Table: <?php echo $title;
+      if ($title != "total") {?>
+        <input class = "pri-btn" type="submit" value="Save Changes >" style="float: right; margin:0 0 12px;">
+      <?php }?>
+      </h2>
       <table id="budgetList">
 
       <?php if ($title == "total") {
@@ -68,7 +72,8 @@
           $sumActual += $actual;
           ?>
 
-          <tr onclick = "location.href='budget.php?category=<?php echo $category?>'"><td><?php echo $category;?></td>
+          <tr onclick = "location.href='budget.php?category=<?php echo $category?>'"
+              id="row<?php echo $category;?>"><td><?php echo $category;?></td>
           <td><?php echo $row['SUM(estimate)'];?></td>
           <td><?php echo $row['SUM(actual)'];?></td>
           <td><?php $difference = $row['SUM(estimate)'] - $row['SUM(actual)'];
@@ -83,6 +88,49 @@
           <th align="left"><?php if ($sumActual != 0) echo number_format((float)$sumActual, 2, '.', '');?></th>
           <th align="left"><?php if ($sumActual != 0) echo $sumEstimate - $sumActual;?></th>
         </tr>
+      </table>
+      <h2><br>Total Spending ($)<div style="float:right; margin-right:12px;"><span class="dot">&nbsp;</span>
+        <small style="font-size: 14px;">Overspent</small></div></h2>
+      <table id="chart">
+
+        <?php
+        $query = "SELECT category, SUM(estimate), SUM(actual) FROM budget GROUP BY category ORDER BY SUM(actual) DESC";
+        $result = $db->query($query);
+        $num_results = $result->num_rows;
+
+        for($i=0; $i<$num_results; $i++) {
+          $row = $result->fetch_assoc();
+          $sumA = $row['SUM(actual)'];
+          $percentage = number_format((float)($sumA/$sumActual), 2, '.', '')*100;
+          $sumE = $row['SUM(estimate)'];
+          if ($i == 0 ) $max = $sumA;
+
+          if ($sumA > 0) {
+            if ($sumA > $sumE) { //if Exceeds
+              $width =floor($sumE / $max * 568);
+              $exceed = floor(($sumA - $sumE) / $max * 568);
+
+            } else {
+              $width =floor(( $sumA / $max ) * 568);
+              $exceed = 0;
+            }
+          } else  {
+            $width = 0;
+            $exceed = 0;
+          }
+
+          ?>
+          <tr><th><?php echo $row['category'];?></th>
+            <td><span class = "bar" style="width:<?php echo $width;?>px;">&nbsp;</span><span class = "exceed" style="width:<?php echo $exceed;?>px;"><?php
+              if($sumA > $sumE) echo '- ',$sumA - $sumE;?></span>
+            <?php echo "<b>", $row['SUM(actual)'],"</b>";
+                  if($percentage != 0) echo " [",$percentage,"%]";?>
+                </td></tr>
+          <?php
+        }
+        ?>
+
+      </table>
         <?php
 
       } else {
@@ -131,16 +179,13 @@
           <th align="left" id = "totalA"><?php if ($sumActual != 0) echo number_format((float)$sumActual, 2, '.', '');?></th>
           <th align="left" id = "totalD"><?php if ($sumActual != 0) echo $sumEstimate - $sumActual;?></th>
         </tr>
+      </table>
         <?php
       }
 
         ?>
 
-
-      </table>
     </div>
-
-
     </div>
 
     <div id="rightcol">
@@ -158,9 +203,9 @@
           $category = $row['category'];
           echo "<li id='$category'><a href='budget.php?category=$category'>$category</a></li>";
         }
-
         ?>
       </ul>
+      <input class = "pri-btn" type="submit" value="+ Add New"  style="margin:16px 38%;">
 
       </div>
     </div>
