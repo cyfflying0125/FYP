@@ -19,6 +19,7 @@
 #budgetList th {
   background-color: #F0EDED;
   padding: 12px;
+  padding-left: 24px;
 }
 #budgetList td {
   background-color: rgba(240,237,237,0.4);
@@ -26,7 +27,50 @@
   padding-left: 24px;
   cursor: pointer;
 }
+#chart {
+  width: 100%;
+}
+#chart td {
+  padding:4px 0;
+}
 
+#chart th {
+  width: 160px;
+  text-align: right;
+  padding-right: 8px;
+
+}
+
+.bar {
+  background-color: white;
+  opacity: 0.6;
+  width: 0;
+  display: inline-block;
+  margin-left: 12px;
+
+}
+.dot {
+  height: 14px;
+  width: 14px;
+  background-color: rgba(255,0,0,0.3);
+  display: inline-block;
+  margin-right: 8px;
+
+  vertical-align: middle;
+}
+.exceed {
+  padding-left: 4px;
+  background-color: rgba(255,0,0,0.3);
+  color:transparent;
+  width: 0;
+  display: inline-block;
+  margin-right: 8px;
+
+}
+.exceed:hover{
+  background-color: rgba(255,0,0,0.6);
+  color: white;
+}
 #directory {
   padding: 0;
 }
