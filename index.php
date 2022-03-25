@@ -129,10 +129,10 @@
 				scene.add( gridHelper );
 
 			//Light
-			const light = new THREE.AmbientLight( 0xffffff, 0.6); // soft white light
+			const light = new THREE.AmbientLight( 0xffffff, 0.4); // soft white light
 			scene.add( light );
-			const pointLight = new THREE.PointLight( 0xffffff, 0.6 );
-			pointLight.position.set( 25, 50, 25 );
+			const pointLight = new THREE.PointLight( 0xffffff, 0.5 );
+			pointLight.position.set( 15, 15, 0 );
 			scene.add( pointLight );
 
 			//raycaster
@@ -222,6 +222,7 @@
 						var z = obj.position.z;
 						createAsset(null,path,x,y,z,r,s);
 
+
 						var today = new Date();
 						document.getElementById('status').innerHTML = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds() + " A new design was implemented (" + path + ").";
 					}
@@ -265,7 +266,7 @@
 				const loader = new GLTFLoader();
 				loader.load(
 					// resource URL
-					'./assets/base1.glb',
+					'./assets/base.glb',
 					// called when the resource is loaded
 					function ( gltf ) {
 						gltf.scene.scale.set(20,20,20);
@@ -313,8 +314,49 @@
 						}
 
 			function createAsset(id,modelPath,x,y,z,r,s) {
-				const objLoader = new OBJLoader();
+				const loader = new GLTFLoader();
 
+				loader.load(
+					// resource URL
+					'./assets/' + modelPath,
+					// called when the resource is loaded
+					function ( gltf ) {
+						gltf.scene.scale.set(s,s,s);
+						gltf.scene.position.set(x,y,z);
+						gltf.scene.rotation.x = Math.PI * r;
+						gltf.scene.userData.ground = true;
+						//gltf.scene.castShadow = true;
+						//gltf.scene.receiveShadow = true;
+
+						gltf.scene.userData.draggable = true;
+						gltf.scene.userData.name = '' + modelPath;
+						gltf.scene.name = '' + id;
+
+						console.log(`created asset ${gltf.scene.name}`);
+
+						scene.add( gltf.scene );
+
+						gltf.animations; // Array<THREE.AnimationClip>
+						gltf.scene; // THREE.Group
+						gltf.scenes; // Array<THREE.Group>
+						gltf.cameras; // Array<THREE.Camera>
+						gltf.asset; // Object
+
+					},
+					// called while loading is progressing
+					function ( xhr ) {
+
+					//	console.log( ( xhr.loaded / xhr.total * 100 ) + '% loaded' );
+
+					},
+					// called when loading has errors
+					function ( error ) {
+
+						console.log( 'An error happened' );
+
+					}
+				);
+				/*
 				objLoader.loadAsync('./assets/' + modelPath).then((group) => {
 					const asset = group.children[0];
 
@@ -338,7 +380,7 @@
 					console.log(`created asset ${asset.name}`);
 
 					scene.add(asset);
-				})
+				})*/
 			}
 			function removeObject(name) {
 				var obj = scene.getObjectByName(name);
