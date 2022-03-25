@@ -128,13 +128,14 @@ hr {
 }
 
 .dot {
-  height: 12px;
-  width: 12px;
+  height: 10px;
+  width: 10px;
   border-radius: 50%;
   display: inline-block;
-  margin-right: 8px;
   border: 2px solid white;
+  margin-right: 2px;
 }
+
 .addNew {
   width: 100%;
 }
