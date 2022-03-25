@@ -22,7 +22,7 @@
 				<tr><td>Albus & Charis</td>
 				<th><ul>
 					 <li><a href="index.php">Venue</a></li>
-					 <li><a href="calendar.html">Calendar</a></li>
+					 <li><a href="calendar.php">Calendar</a></li>
 					 <li><a href="budget.html">Budget</a></li>
 					 <li><a href="#">Community</a></li>
 					 <li><a href="#">Account Settings</a></li>
@@ -182,7 +182,7 @@
 				}
 				xhttp.open("GET", "infobar.php?name="+str);
 				xhttp.send();
-				}
+			}
 
 
 
