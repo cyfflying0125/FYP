@@ -1,4 +1,5 @@
 <?php
+
   include 'connect.php';
   date_default_timezone_set('Asia/Singapore');
 
@@ -10,12 +11,25 @@
     $colour = $_POST['colour'];
     $location = $_POST['location'];
     $agenda = $_POST['agenda'];
+    $eventID = $_POST['eventID'];
 
-    $queryInsert = "INSERT INTO calendar(`title`, `date`, `start_time`, `colour`, `location`, `agenda`)
-      VALUES ('$title' ,'$dateFormatted','$startTime','$colour','$location','$agenda');";
+    if ($eventID > 0) {
+      $queryInsert = "UPDATE calendar
+        SET `title`='$title',`date`='$dateFormatted',`start_time`='$startTime',`colour`='$colour',`location`='$location',`agenda`='$agenda'
+        WHERE eventID = $eventID";
+    } else {
+      $queryInsert = "INSERT INTO calendar(`title`, `date`, `start_time`, `colour`, `location`, `agenda`)
+        VALUES ('$title' ,'$dateFormatted','$startTime','$colour','$location','$agenda')";
+    }
     //echo $queryInsert;
     $result = $db->query($queryInsert);
-    echo '<script>alert("Event Added Successfully!")</script>';
+    echo '<script>alert("Event Added / Updated Successfully!")</script>';
+  }
+
+  if(isset($_GET['delete'])) {
+    $eventID = $_GET['delete'];
+    $query = "DELETE FROM calendar WHERE eventID = $eventID";
+    $result = $db->query($query);
   }
 ?>
 <!DOCTYPE html>
@@ -42,7 +56,7 @@
 				<th><ul>
 					 <li><a href="index.php">Venue</a></li>
 					 <li><a href="calendar.php">Calendar</a></li>
-					 <li><a href="people.php">People</a></li>
+					 <li><a href="people.php?viewmode=grid">People</a></li>
 					 <li><a href="#">Community</a></li>
 					 <li><a href="#">Account Settings</a></li>
 					</ul></th></tr>
@@ -118,16 +132,17 @@
       <div id="dayEvent">
       <h2>Event Scheduled</h2>
       <table class = "scheduled" id = "event"></table>
-      <h2>Add a New Event</h2>
+      <h2>Add / Edit Event</h2>
       <form action="calendar.php" method = "post">
       <table class="addNew">
-        <tr><th>Title* </th><td><input type="text" name="title" required></td></tr>
-        <tr><th>Colour </th><td><input id = "colorpicker" name="colour" type="color" value ="#bbbbbb"></tr>
+        <input type="hidden" id="eventID" name="eventID" value="">
+        <tr><th>Title* </th><td><input type="text" id="title" name="title" required></td></tr>
+        <tr><th>Colour </th><td><input id="colorpicker" name="colour" type="color" value ="#bbbbbb"></tr>
         <tr><th>Date</th><td><input id="currentDate" name="currentDate" value='<?php echo date("d M Y");?>' onfocus="this.blur();"></td></tr>
-        <tr><th>Start Time</th><td><input type="time" name="eventTime"></td></tr>
-        <tr><th>Location</th><td><input type="text" name="location"></td></tr>
-        <tr><th>Agenda </th><td><input type="textarea" name="agenda"></td></tr>
-        <tfoot><tr><td colspan="2"><input class = "sec-btn" type="reset" value="Clear">
+        <tr><th>Start Time</th><td><input id="eventTime" type="time" name="eventTime"></td></tr>
+        <tr><th>Location</th><td><input type="text" id="location" name="location"></td></tr>
+        <tr><th>Agenda </th><td><input type="textarea" id="agenda" name="agenda"></td></tr>
+        <tfoot><tr><td colspan="2"><input class = "sec-btn" type="reset" value="Cancel">
           <input class = "pri-btn" type="submit" value="+ Add to Calendar"></td></tr></tfoot>
       </table>
       </form>
