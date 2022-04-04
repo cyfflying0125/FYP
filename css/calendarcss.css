@@ -151,6 +151,7 @@ input {
   border: solid 1px #bbb;
   border-radius: 2px;
   height: 20px;
+  font-family: inherit;
 }
 #colorpicker {
   width:24px;
