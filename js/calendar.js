@@ -47,6 +47,7 @@ const renderCalendar = () => {
   document.querySelector(".date h1").innerHTML = months[date.getMonth()] + " " + date.getFullYear();
 
 
+
   let days = "";
 
 
@@ -89,6 +90,11 @@ document.querySelector(".next").addEventListener("click", () => {
 
 renderCalendar();
 
+const today = new Date();
+var todayDate = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+updateDate(todayDate);
+
+
 function updateDate(date) {
   var xhttp = new XMLHttpRequest();
   xhttp.onload = function() {
@@ -109,7 +115,6 @@ function addEL() {
       document.getElementById('currentDate').value = date;//change date in the form
       event.target.style.backgroundColor = 'white';//highlight current date
       prevSelected = event.target;
-      console.log('scheduler js called');
       //update event scheduled
       updateDate(date);
     })
@@ -127,4 +132,13 @@ function addEL() {
     updateDate(date);
 
   });
+}
+function editEvent(id,title,date,time,colour,location,agenda) {
+  document.getElementById('eventID').value = id;
+  document.getElementById('title').value = title;
+  document.getElementById('currentDate').value = date;
+  document.getElementById('eventTime').value = time;
+  document.getElementById('colorpicker').value = colour;
+  document.getElementById('location').value = location;
+  document.getElementById('agenda').value = agenda;
 }
