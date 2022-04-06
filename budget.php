@@ -5,6 +5,7 @@
   if (isset($_GET['category'])) {
     $title = $_GET['category'];
   }
+
 ?>
 <!DOCTYPE html>
 <html>
@@ -15,6 +16,7 @@
     <link rel="stylesheet" href="css/mastercss.css">
     <link rel="stylesheet" href="css/budgetcss.css">
   	<title>Wedding Planner</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
 
 	</head>
@@ -42,14 +44,16 @@
 
     <div id="leftcol">
     <div id="budgetTable">
+      <p></p>
+      <form action="budget.php" id="main" method="POST">
       <h2>Budget Table: <?php echo $title;
       if ($title != "overview") {?>
-        <input class = "pri-btn" type="submit" value="Save Changes >" style="float: right; margin:0 0 12px;">
+        <button class = "pri-btn" id="save" style="float: right; margin:0 0 12px;">Save Changes > </button>
       <?php }?>
       </h2>
       <table id="budgetList">
 
-      <?php if ($title == "overview") {
+      <?php if ($title == "" ||$title == "overview") {
         ?>
         <tr><th>Category</th>
           <th>Total Estimated($)</th>
@@ -156,20 +160,26 @@
           $row = $result->fetch_assoc();
           $estimate = $row['estimate'];
           $actual = $row['actual'];
+          $itemID = $row['itemID'];
           $sumEstimate += $estimate;
           $sumActual += $actual;
-          $idE = "E" .$i;
-          $idA = "A" .$i;
-          $idD = "D" .$i;
-
+          $idE = "E" .$i;//estimate
+          $idA = "A" .$i;//actual
+          $idD = "D" .$i;//difference
+          $idS = "S" .$i;//subcategory
+          $idV = "V" .$i;//vendor
 
         ?>
-          <tr><td contenteditable="true"><?php echo $row['subcategory']?></td>
-          <td contenteditable="true"><?php echo $row['vendor']?></td>
-          <td contenteditable="true" onblur = "calculateE(<?php echo $i?>);" class ="estimate" id="<?php echo $idE;?>">
-            <?php echo $row['estimate']?></td>
-          <td contenteditable="true" onblur = "calculateA(<?php echo $i?>);" class = "actual" id="<?php echo $idA;?>">
-            <?php echo $row['actual']?></td>
+          <tr><td contenteditable="true" id="<?php echo $idS;?>"onblur = "insertArray('subcategory',<?php echo $itemID,",'",$idS,"'";?>);"><?php echo $row['subcategory'];?></td>
+          <td contenteditable="true" id="<?php echo $idV;?>"onblur = "insertArray('vendor',<?php echo $itemID,",'",$idV,"'";?>);"><?php echo $row['vendor'];?></td>
+          <td contenteditable="true" onblur = "calculateE(<?php echo $i;?>);
+            insertArray('estimate',<?php echo $itemID,",'",$idE,"'";?>);"
+            class ="estimate" id="<?php echo $idE;?>">
+            <?php echo $row['estimate'];?></td>
+          <td contenteditable="true" onblur = "calculateA(<?php echo $i;?>);
+            insertArray('actual',<?php echo $itemID,",'",$idA,"'";?>);"
+            class = "actual" id="<?php echo $idA;?>">
+            <?php echo $row['actual'];?></td>
           <td id="<?php echo $idD;?>"><?php $difference = $estimate - $actual;
             if($difference != $estimate)
             echo number_format((float)$difference, 2, '.', ''); ?></td>
@@ -186,6 +196,7 @@
           <th align="left" id = "totalD"><?php if ($sumActual != 0) echo $sumEstimate - $sumActual;?></th>
         </tr>
       </table>
+    </form>
         <?php
       }
 
@@ -219,4 +230,3 @@
     <script type="text/javascript" src="js/budgetCalculator.js"></script>
 </body>
 </html>
- 
