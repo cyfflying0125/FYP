@@ -68,3 +68,42 @@ function calculateA(i) {
   document.getElementById(idD).innerHTML = displayD;
 
 }
+
+var editArray = [];
+
+function insertArray(header,id,idX) {
+  var subcategory = header + "";
+  var itemID = id;
+  var value = document.getElementById(idX).innerHTML + "";
+  var innerArray = [id, subcategory, value];
+  editArray.push(innerArray);
+  console.log(editArray);
+  /*
+  for (let i = 0; i < editArray.length; i++) {
+    if (id == editArray[i][0] && subcategory == editArray[i][1]){
+      editArray[i][2] = value;
+      console.log(editArray);
+      console.log('x');
+    } else {
+
+
+    }
+  }*/
+}
+
+$(document).ready(function(){
+  $("#save").click(function(e){
+    e.preventDefault();
+    console.log(editArray);
+    $.post('update.php',   // url
+  			   { editArray: editArray, page:'budget' }, // data to be submit
+  			   function(data, status, jqXHR) {// success callback
+  						$('p').append(data);
+
+  				}).done(function() { alert('Request done!');
+
+        })
+  				  .fail(function(jqxhr, settings, ex) { alert('failed, ' + ex); });
+
+  });
+});
