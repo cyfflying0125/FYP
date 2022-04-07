@@ -15,17 +15,19 @@
 #budgetList tr:hover {
   background-color: white;
 
+
 }
 #budgetList th {
   background-color: #F0EDED;
   padding: 12px;
   padding-left: 24px;
+  cursor: default;
 }
 #budgetList td {
   background-color: rgba(240,237,237,0.4);
   padding: 12px;
   padding-left: 24px;
-  cursor: pointer;
+  cursor: crosshair;
 }
 #chart {
   width: 100%;
@@ -111,4 +113,29 @@
   content: "";
   display: table;
   clear: both;
+}
+#newBudget input{
+  font-family: inherit;
+  margin: 0 0 4px;
+  background-color:  #E7E3E0;
+  border: 1px solid gray;
+  border-radius: 2px;
+  width: 70%;
+  height: 24px;
+}
+#newBudget select {
+
+  background-color:  #E7E3E0;
+  border: 1px solid gray;
+  border-radius: 2px;
+  height: 28px;
+  font-family: inherit;
+}
+#newBudget th {
+  vertical-align: top;
+  padding: 12px;
+}
+#newBudget button {
+  background-color:  #E7E3E0;
+  border: 1px solid #D3D3D3;
 }
