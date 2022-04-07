@@ -76,34 +76,37 @@ function insertArray(header,id,idX) {
   var itemID = id;
   var value = document.getElementById(idX).innerHTML + "";
   var innerArray = [id, subcategory, value];
-  editArray.push(innerArray);
-  console.log(editArray);
-  /*
-  for (let i = 0; i < editArray.length; i++) {
-    if (id == editArray[i][0] && subcategory == editArray[i][1]){
-      editArray[i][2] = value;
-      console.log(editArray);
-      console.log('x');
-    } else {
+  var isPresent = false;
 
-
+  console.log(innerArray);
+  if(editArray.length == 0) { //if editArray is empty
+    editArray.push(innerArray); //Add to editArray
+  } else { //if it's not empty
+    for (let i = 0; i < editArray.length; i++) { //For all elements in the editArray
+      if ( editArray[i][0] == id && editArray[i][1] == subcategory){ //if this cell alr exists
+        editArray[i][2] = value; //update its value
+        isPresent = true; //update boolean
+        break; //stop array search
+      }
     }
-  }*/
+    if(!isPresent) { // if the cell not found in array at the end of array search
+      editArray.push(innerArray); // Add to editArray
+    }
+  }
 }
 
 $(document).ready(function(){
-  $("#save").click(function(e){
+  $("#save").click(function(e){//When SAVE button is clicked
+  
     e.preventDefault();
-    console.log(editArray);
-    $.post('update.php',   // url
-  			   { editArray: editArray, page:'budget' }, // data to be submit
-  			   function(data, status, jqXHR) {// success callback
+    //console.log(editArray);
+    $.post('update.php', //AJAX
+  			   { editArray: editArray, page:'budget' }, // Data to be submitted
+  			   function(data, status, jqXHR) {// Success callback
   						$('p').append(data);
-
-  				}).done(function() { alert('Request done!');
-
+  				}).done(function() { alert('Your Changes Have Been Saved.');//Success Alert
         })
-  				  .fail(function(jqxhr, settings, ex) { alert('failed, ' + ex); });
+  				  .fail(function(jqxhr, settings, ex) { alert('Request Failed, ' + ex); });//Failure Alert
 
   });
 });
