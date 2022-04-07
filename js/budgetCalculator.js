@@ -97,7 +97,7 @@ function insertArray(header,id,idX) {
 
 $(document).ready(function(){
   $("#save").click(function(e){//When SAVE button is clicked
-  
+
     e.preventDefault();
     //console.log(editArray);
     $.post('update.php', //AJAX
@@ -110,3 +110,22 @@ $(document).ready(function(){
 
   });
 });
+function openNewBudget() {
+  document.getElementById('newBudget').style.display = "inherit";
+
+}
+function validate() {
+
+}
+function showOther() {
+  var checkBox = document.getElementById("chkbox");
+  if (checkBox.checked == true){ //OTHER is checked
+    document.getElementById("TDother").style.opacity = 1;
+    document.getElementById("newCategory").disabled = true;
+    document.getElementById("default").selected = true;
+  } else { //Dropdown is used
+    document.getElementById("TDother").style.opacity = 0.3;
+    document.getElementById("other").value="";
+    document.getElementById("newCategory").disabled = false;
+  }
+}
