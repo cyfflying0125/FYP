@@ -33,6 +33,7 @@
 				<th><ul>
 					 <li><a href="index.php">Venue</a></li>
 					 <li><a href="calendar.php">Calendar</a></li>
+           <li><a href="budget.php">Budget</a></li>
 					 <li><a href="people.php?viewmode=grid">People</a></li>
 
 					 <li><a href="#">Account Settings</a></li>
@@ -193,7 +194,7 @@
           if ($sumActual != 0) {
             echo number_format((float)$sumActual, 2, '.', '');
           } else echo "0.00";?></th>
-          <th align="left" id = "totalD"><?php if ($sumActual != 0) echo $sumEstimate - $sumActual;?></th>
+          <th align="left" id = "totalD"><?php if ($sumActual != 0) echo number_format((float)($$sumEstimate - $sumActual), 2, '.', '');?></th>
         </tr>
       </table>
     </form>
