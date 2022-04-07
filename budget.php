@@ -60,6 +60,7 @@
           <th>Total Estimated($)</th>
           <th>Actual Spending($)</th>
           <th>Difference($)</th>
+
         </tr>
 
         <?php
@@ -84,6 +85,7 @@
           <td><?php $difference = $row['SUM(estimate)'] - $row['SUM(actual)'];
             if($difference != $row['SUM(estimate)'])
             echo number_format((float)$difference, 2, '.', ''); ?></td>
+
           </tr>
           <?php
         }
@@ -148,6 +150,7 @@
           <th>Estimated($)</th>
           <th>Actual($)</th>
           <th>Difference($)</th>
+          <th></th>
         </tr>
 
         <?php
@@ -184,6 +187,9 @@
           <td id="<?php echo $idD;?>"><?php $difference = $estimate - $actual;
             if($difference != $estimate)
             echo number_format((float)$difference, 2, '.', ''); ?></td>
+            <td><a onclick="return confirm('Delete this row?');"
+              href="update.php?delete=<?php echo $itemID;?>&category=<?php echo $title;?>">
+              <img src="icon/delete.png" alt="Delete" width="16" height="16" style="opacity:0.3;"></a></td>
         </tr>
         <?php
         }
@@ -195,6 +201,7 @@
             echo number_format((float)$sumActual, 2, '.', '');
           } else echo "0.00";?></th>
           <th align="left" id = "totalD"><?php if ($sumActual != 0) echo number_format((float)($$sumEstimate - $sumActual), 2, '.', '');?></th>
+          <th></th>
         </tr>
       </table>
     </form>
@@ -223,8 +230,53 @@
         }
         ?>
       </ul>
-      <input class = "pri-btn" type="submit" value="+ Add New"  style="margin:16px 38%;">
+      <input class = "pri-btn" onclick="openNewBudget();" type="submit" value="+ Add New"  style="margin:16px 38%;">
+      <div id="newBudget" style="display:none">
+      <hr style="opacity:0.2;">
+      <form method = "post" action="update.php">
 
+        <table>
+          <tr>
+            <th>Category* </th>
+            <td><select name="newCategory" id="newCategory">
+              <option value="" id="default" hidden selected>Please Select a Category...</option>
+              <?php
+                $query = 'SELECT DISTINCT category FROM budget';
+                $result = $db->query($query);
+                $num_results = $result->num_rows;
+
+                for($i=0; $i<$num_results; $i++) {
+                  $row = $result->fetch_assoc();
+                  echo "<option value='",$row['category'],"'>",$row['category'],"</option>";
+                }
+              ?>
+            </select>
+
+            </td>
+          </tr>
+          <tr ><th style="text-align:right;"><input type="checkbox" id="chkbox" onclick="showOther();" style="margin:0; width:16px;"></th>
+            <td id="TDother" style="opacity: 0.3;">Other:&nbsp;<input type="text" name="other" id="other"></td></tr>
+          <tr>
+            <th>Budget Item*</th>
+            <td><input type="text" name="newItem" required></td>
+          </tr>
+          <tr>
+            <th>Vendor</th>
+            <td><input type="text" name="newVendor"></td>
+          </tr>
+          <tr>
+            <th>Estimated Amount($)</th>
+            <td><input type="text" name="newEstimate"></td>
+          </tr>
+          <tr>
+            <th>Actual Amount($)</th>
+            <td><input type="text" name="newActual"></td>
+          </tr>
+
+        </table>
+        <button class = "sec-btn" type="submit" value="Confirm" style="margin:16px 38%;">Confirm</button>
+      </form>
+      </div>
       </div>
     </div>
     </div>
