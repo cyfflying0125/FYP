@@ -33,6 +33,7 @@
   line-height: normal;
   display:inline-block;
   margin-top: 40px;
+  margin-bottom: 20px;
 }
 .number {
   height: 40px;
@@ -96,4 +97,18 @@ p {
 }
 #attendance tr:hover {
   background-color: white;
+}
+.title, .subtitle {
+  font-size: inherit;
+  font-family: inherit;
+  font-weight: inherit;
+  color: inherit;
+  background-color: #F0EDED;
+  border: 1px solid #DCDCDC;
+  border-radius: 4px;
+  text-align: center;
+}
+#newService {
+  box-shadow: 2px 2px 8px #E2D0D0;
+  display: none;
 }
