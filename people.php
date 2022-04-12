@@ -11,6 +11,7 @@
 		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
     <link rel="stylesheet" type="text/css" href="css/mastercss.css">
     <link rel="stylesheet" type="text/css" href="css/peoplecss.css">
+    <script type="text/javascript" src="js/guestManager.js"></script>
 
   	<title>Wedding Planner</title>
 
@@ -26,11 +27,11 @@
 				</tr>
 				<tr><td>Albus & Charis</td>
 				<th><ul>
-					 <li><a href="index.php">Venue</a></li>
-					 <li><a href="calendar.php">Calendar</a></li>
-					 <li><a href="people.php?viewmode=grid">People</a></li>
-					 <li><a href="#">Community</a></li>
-					 <li><a href="#">Account Settings</a></li>
+          <li><a href="index.php">Venue</a></li>
+          <li><a href="calendar.php">Calendar</a></li>
+          <li><a href="budget.php">Budget</a></li>
+          <li><a href="people.php?viewmode=grid">People</a></li>
+					<li><a href="#">Account Settings</a></li>
 					</ul></th></tr>
 			</table>
 			<hr style="border-top: 0.5px solid #F0EDED; opacity: 0.05; margin-bottom: 0;">
@@ -42,13 +43,19 @@
       <?php
         if(isset($_GET['viewmode']) && $_GET['viewmode'] == 'grid' ) {
           ?>
-      <h2>Processional<div id="fullList" style="font-size: 18px;">
+      <h2>Processional<a href="javascript:addNewProcessional();"><img id="serviceIcon" src="icon/add.png" height="24" width="24" style="opacity:0.4; margin-left:8px; vertical-align:text-top;"></a>
+        <div id="fullList" style="font-size: 18px;">
         <a id="gridView" href="people.php?viewmode=grid">Grid View</a> |
         <a id="ListView" href="people.php?viewmode=list">Full List</a></div>
       </h2>
       <br>
       <div id="grid">
       <?php
+      $query = "SELECT MAX(people.group) FROM people";
+      $result = $db->query($query);
+      $row = $result->fetch_assoc();
+      $max = $row['MAX(people.group)'] + 1;
+
       echo "<script>document.getElementById('gridView').style.fontWeight = 'bold';</script>";
       $query = "SELECT * FROM people WHERE category = 'Processional' ORDER BY people.group ASC";
       $result = $db->query($query);
@@ -68,7 +75,7 @@
       }
 
 
-      for ($j=1; $j<7; $j++) { //for each group, print a card
+      for ($j=1; $j<$max; $j++) { //for each group, print a card
         ?>
         <div class="card">
         <div class="container">
@@ -94,8 +101,16 @@
       <?php
       }
       ?>
+      <div class="card">
+      <div class="container">
+        <span class="number"><?php echo $max;?></span>
+        <h4><b><input required class="title" type="text" value="New Title"></b></h4>
+        <p><input class="subtitle" type="text" value="Name"></p>
+        <p><button class="pri-btn" style="margin: 0; border-radius: 50%;">OK</button></p>
       </div>
-      <h2>Services</h2>
+      </div>
+      </div>
+      <h2>Services<a href="javascript:addNewService();"><img id="serviceIcon" src="icon/add.png" height="24" width="24" style="opacity:0.4; margin-left:8px; vertical-align:text-top;"></a></h2>
 
       <?php
       $query = "SELECT * FROM people WHERE category = 'Service'";
@@ -110,10 +125,16 @@
           <p><?php echo $row['name'];?></p>
         </div>
       </div>
-
         <?php
       }
        ?>
+       <div class="card" id= "newService" style="height:140px; display: none; height: auto">
+       <div class="container">
+         <h4><b><input required class="title" type="text" value="New Title"></b></h4>
+         <p><input class="subtitle" type="text" value="Name"></p>
+         <p><button class="pri-btn" style="margin: 0; border-radius: 50%;">OK</button></p>
+        </div>
+      </div>
 
       <h2>Guest Invitation</h2>
 
