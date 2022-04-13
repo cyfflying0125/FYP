@@ -13,7 +13,20 @@ function addNewService() {
 }
 function addNewProcessional() {
   if (!isAddNewProcessional) {
-    
+    document.getElementById('newProcessional').style.display = "";
+    isAddNewProcessional = true;
+    document.getElementById('processionalIcon').src = "icon/minus.png";
+  } else {
+    document.getElementById('newProcessional').style.display = "none";
+    isAddNewProcessional = false;
+    document.getElementById('processionalIcon').src = "icon/add.png";
   }
 
+}
+function openEdit() {
+  document.getElementById('overlay').style.display = "block";
+
+}
+function close() {
+  document.getElementById('overlay').style.display = "none";
 }
