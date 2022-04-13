@@ -63,7 +63,7 @@ p {
   border-spacing: 0;
   display: inline-table;
   margin-right: 12px;
-  margin-top: 8px;
+  margin-top: 12px;
 }
 
 #guestTable th {
@@ -111,4 +111,27 @@ p {
 #newService {
   box-shadow: 2px 2px 8px #E2D0D0;
   display: none;
+}
+#overlay {
+  z-index: 0.2px;
+  position: fixed;
+  float:left;
+  left: 30%;
+  top: 20%;
+  background-color: #F0EDED;
+  padding: 36px;
+  filter:drop-shadow(8px 8px 10px #E2D0D0);
+  display: none;
+}
+#overlay td {
+  padding: 4px 12px;
+}
+#overlay input {
+  font-family: inherit;
+  color:inherit;
+  background-color: white;
+  border-radius: 4px;
+  border: 1px solid #DCDCDC;
+  height: 24px;
+  width: 220px;
 }
