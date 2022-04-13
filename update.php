@@ -40,14 +40,56 @@ if(isset($_POST['newItem'])) {
 
 //TO DELETE A ROW
 if(isset($_GET['delete'])) {
-  $query = "SELECT COUNT(category) FROM budget WHERE category ='".$_GET['category']."'";
-  $result = $db->query($query);
-  $row = $result->fetch_assoc();
+  if(isset($_GET['table'])) {
+    $query = "DELETE FROM people WHERE name ='".$_GET['delete']."'";
+    $db->query($query);
+    header('Location: people.php?viewmode=list');
 
-  $query = "DELETE FROM budget WHERE itemID =".$_GET['delete'];
-  $db->query($query);
-  if($row['COUNT(category)'] == 1) {
-    header('Location: budget.php');
-  } else header('Location: budget.php?category='.$_GET['category']);
+  } else {
+    $query = "SELECT COUNT(category) FROM budget WHERE category ='".$_GET['category']."'";
+    $result = $db->query($query);
+    $row = $result->fetch_assoc();
+
+    $query = "DELETE FROM budget WHERE itemID =".$_GET['delete'];
+    $db->query($query);
+    if($row['COUNT(category)'] == 1) {
+      header('Location: budget.php');
+    } else header('Location: budget.php?category='.$_GET['category']);
+  }
 }
+
+
+ if (isset($_POST['formName']) && $_POST['formName'] == 'service') {
+   $newRole = $_POST['newRole'];
+   $newName = $_POST['newName'];
+   $query = "INSERT INTO people (`name`, `category`, `role`)
+    VALUES ('$newName','Service','$newRole')";
+    $db->query($query);
+    echo $query;
+
+    header('Location: people.php?viewmode=grid');
+
+ } else if (isset($_POST['formName']) && $_POST['formName'] == 'processional') {
+   $newRole = str_replace("'","\'",$_POST['newRole']);
+   $newName = str_replace("'","\'",$_POST['newName']);
+
+   $query = "SELECT people.group FROM people WHERE role = '$newRole'";
+   echo $query;
+   $result = $db->query($query);
+   $num_results = $result->num_rows;
+   if($num_results == 0) {
+     $group = $_POST['max'];
+   } else {
+     $row = $result->fetch_assoc();
+     $group = $row['group'];
+   }
+
+    $query = "INSERT INTO people (`name`, `category`, `role`,`group`)
+     VALUES ('$newName','Processional','$newRole',$group)";
+     $db->query($query);
+     //echo $query;
+    header('Location: people.php?viewmode=grid');
+   }
+
+
 ?>
