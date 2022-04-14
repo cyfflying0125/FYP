@@ -12,10 +12,12 @@ if (isset($_POST['guestID'])) {
   $tableNo = $_POST['tableNo'];
   $remarks = $_POST['remarks'];
   $id = $_POST['guestID'];
-
-  $query = "UPDATE people SET name='$name',category='$category',role ='$role', confirmation ='$confirmation',tableNumber ='$tableNo',remarks='$remarks'
-    WHERE guestID = $id";
+  if ($id == '') {
+    $query = "INSERT INTO people (`name`, `category`, `role`, `confirmation`, `tableNumber`, `remarks`) VALUES ('$name','$category','$role','$confirmation','$tableNo','$remarks')";
     echo $query;
+  } else $query = "UPDATE people SET name='$name',category='$category',role ='$role', confirmation ='$confirmation',tableNumber ='$tableNo',remarks='$remarks'
+    WHERE guestID = $id";
+
   $db->query($query);
   header('Location: people.php?viewmode=list');
 }
