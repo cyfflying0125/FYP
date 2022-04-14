@@ -126,7 +126,7 @@ p {
 #overlay td {
   padding: 4px 12px;
 }
-#overlay input {
+#overlay input, select {
   font-family: inherit;
   color:inherit;
   background-color: white;
