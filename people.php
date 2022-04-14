@@ -195,21 +195,23 @@
       ?>
       <h2><div id="fullList" style="font-size: 18px;">
         <a id="gridView" href="people.php?viewmode=grid">Grid View</a> |
-        <a id="ListView" href="people.php?viewmode=list">Full List</a></div>
+        <a id="ListView" href="people.php?viewmode=list">Full List</a>
+        <br><button class = "pri-btn" onclick="newEdit();" style="float:right; margin-right: 66px;">Add New +</button>
+      </div>
       </h2>
       <div id="overlay">
-        <form method="post" action="update.php">
+        <form method="post" action="update.php" id="overlayForm">
         <table>
           <input type="hidden" name="page" value="people">
           <input type="hidden" name="guestID" id="guestID" value="">
-          <tr><th>Name</th><td><input type="text" id="name" name="name" value=""></td></tr>
+          <tr><th>Name*</th><td><input required type="text" id="name" name="name" value=""></td></tr>
           <tr><th>Category</th><td><select id="category" name="category" style="margin-left:0">
               <option id="p" value = "Processional">Processional</option>
               <option id="s" value = "Service">Service</option>
-              <option id="g" value = "Guest">Guest</option></select></td></tr>
+              <option id="g" selected value = "Guest">Guest</option></select></td></tr>
           <tr><th>Role</th><td><input type="text" id="role" name="role" value=""></td></tr>
           <tr><th>Table Number</th><td><input type="text" id="tableNo" name="tableNo" value=""></td></tr>
-          <tr><th>Confirmation</th><td><input type="text" id="confirmation" name="confirmation" value=""></td></tr>
+          <tr><th>Confirmation</th><td><input type="text" id="confirmation" name="confirmation" value="No"></td></tr>
           <tr><th>Remarks</th><td><input type="text" id="remarks" name="remarks" value=""></td></tr>
         </table>
 
