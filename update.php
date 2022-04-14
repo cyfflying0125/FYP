@@ -3,7 +3,22 @@ include 'connect.php';
 
 //TO SAVE TABLE EDITS
 if (isset($_POST['page'])) $page = $_POST['page'];
-//echo "<br>".$_POST['page'];
+
+if (isset($_POST['guestID'])) {
+  $name = $_POST['name'];
+  $category = $_POST['category'];
+  $role = str_replace("'","\'",$_POST['role']);
+  $confirmation = $_POST['confirmation'];
+  $tableNo = $_POST['tableNo'];
+  $remarks = $_POST['remarks'];
+  $id = $_POST['guestID'];
+
+  $query = "UPDATE people SET name='$name',category='$category',role ='$role', confirmation ='$confirmation',tableNumber ='$tableNo',remarks='$remarks'
+    WHERE guestID = $id";
+    echo $query;
+  $db->query($query);
+  header('Location: people.php?viewmode=list');
+}
 if (isset($_POST['editArray'])) {
   $editArray = $_POST['editArray'];
   foreach($editArray as $key => $innerArray) {
