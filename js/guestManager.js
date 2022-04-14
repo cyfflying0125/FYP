@@ -23,10 +23,22 @@ function addNewProcessional() {
   }
 
 }
-function openEdit() {
+function openEdit(id,name,category,role,tableNo,confirmation,remarks) {
   document.getElementById('overlay').style.display = "block";
+  document.getElementById('guestID').value = id;
+  document.getElementById('name').value = name;
+  document.getElementById('category').value = category;
+  document.getElementById('tableNo').value = tableNo;
+  document.getElementById('confirmation').value = confirmation;
+  document.getElementById('remarks').value = remarks;
+  document.getElementById('role').value = role;
+  var select;
+  if(role == "Processional") select = "p";
+  if(role == "Service") select = "s";
+  if(role == "Guest") select = "g";
+  document.getElementById(select).selected = true;
 
 }
-function close() {
+function closeOverlay() {
   document.getElementById('overlay').style.display = "none";
 }
