@@ -42,3 +42,7 @@ function openEdit(id,name,category,role,tableNo,confirmation,remarks) {
 function closeOverlay() {
   document.getElementById('overlay').style.display = "none";
 }
+function newEdit() {
+  document.getElementById('overlay').style.display = "block";
+  document.getElementById('overlayForm').reset();
+}
