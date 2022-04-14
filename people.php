@@ -198,18 +198,23 @@
         <a id="ListView" href="people.php?viewmode=list">Full List</a></div>
       </h2>
       <div id="overlay">
-        <form method="post" action="">
+        <form method="post" action="update.php">
         <table>
-          <tr><th>Name</th><td><input type="text" name="name" value=""></td></tr>
-          <tr><th>Category</th><td><input type="text" name="category" value=""></td></tr>
-          <tr><th>Role</th><td><input type="text" name="role" value=""></td></tr>
-          <tr><th>Table Number</th><td><input type="text" name="tableNo" value=""></td></tr>
-          <tr><th>Confirmation</th><td><input type="text" name="confirmation" value=""></td></tr>
-          <tr><th>Remarks</th><td><input type="text" name="remarks" value=""></td></tr>
+          <input type="hidden" name="page" value="people">
+          <input type="hidden" name="guestID" id="guestID" value="">
+          <tr><th>Name</th><td><input type="text" id="name" name="name" value=""></td></tr>
+          <tr><th>Category</th><td><select id="category" name="category" style="margin-left:0">
+              <option id="p" value = "Processional">Processional</option>
+              <option id="s" value = "Service">Service</option>
+              <option id="g" value = "Guest">Guest</option></select></td></tr>
+          <tr><th>Role</th><td><input type="text" id="role" name="role" value=""></td></tr>
+          <tr><th>Table Number</th><td><input type="text" id="tableNo" name="tableNo" value=""></td></tr>
+          <tr><th>Confirmation</th><td><input type="text" id="confirmation" name="confirmation" value=""></td></tr>
+          <tr><th>Remarks</th><td><input type="text" id="remarks" name="remarks" value=""></td></tr>
         </table>
 
         <button class = "pri-btn" type="submit" style="float:right;margin-right: 12px;">Update</button>
-        <button class = "sec-btn" onclick="close();" style="float:right;">Cancel</button>
+        <button class = "sec-btn" type="button" onclick="closeOverlay();" style="float:right;">Cancel</button>
         </form>
       </div>
       <?php
@@ -230,6 +235,8 @@
 
       for($i=0; $i<$num_results; $i++) {
         $row = $result->fetch_assoc();
+        $guestID = $row['guestID'];
+        $formattedRole = str_replace("'","\'",$row['role']);
         ?>
         <tr>
           <td><?php echo $row['name'];?></td>
@@ -238,7 +245,7 @@
           <td><?php echo $row['tableNumber'];?></td>
           <td><?php echo $row['confirmation'];?></td>
           <td><?php echo $row['remarks'];?></td>
-          <td><a href="javascript:openEdit('<?php echo $row['name'];?>');">
+          <td><a href="javascript:openEdit('<?php echo $guestID."','".$row['name']."','".$row['category']."','".$formattedRole."','".$row['tableNumber']."','".$row['confirmation']."','".$row['remarks'];?>');">
           <img src="icon/edit.png" width="16" height="16" style="opacity:0.5; margin: 0 4px;"></a>
             <a onclick="return confirm('Delete this row?');" href="update.php?delete=<?php echo $row['name'];?>&table=people">
             <img src="icon/delete.png" width="16" height="16" style="opacity:0.5; margin: 0 4px;"></a></td>
